@@ -18,6 +18,8 @@ import org.example.filesFromXSD.dictionary_v2.*;
 import org.example.filesFromXSD.herriot_applications_v1.AnimalRegistration;
 import org.example.filesFromXSD.herriot_applications_v1.RegisterAnimalRequest;
 import org.example.filesFromXSD.mercury_vet_document.*;
+import org.example.filesFromXSD.registry.GetBusinessEntityListRequest;
+import org.example.filesFromXSD.registry.GetBusinessEntityListResponse;
 import org.xml.sax.InputSource;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -32,6 +34,9 @@ import javax.xml.stream.XMLStreamReader;
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -449,6 +454,34 @@ public class Main {
         return result;
     }
 
+    public static SOAPMessage sentGetBERequest(GetBusinessEntityListRequest request, String endPoint,String auth){
+        StringWriter stringWriter = new StringWriter();
+        Marshaller marshaller;
+        try{
+            marshaller = createMarshaller(GetBusinessEntityListRequest.class);
+            marshaller.marshal(request,stringWriter);
+        }catch (JAXBException ex){
+            throw new RuntimeException("Unable to marshall: " + ex.getMessage());
+        }
+        SOAPConnectionFactory soapConnectionFactory;
+        SOAPConnection soapConnection;
+        try {
+            soapConnectionFactory = SOAPConnectionFactory.newInstance();
+            soapConnection = soapConnectionFactory.createConnection();
+        }catch (SOAPException exception){
+            throw new RuntimeException("Unable to create connection: " + exception.getMessage());
+        }
+        SOAPMessage message = createMessage(stringWriter.toString(),
+                "GetBusinessEntityList",
+                auth);
+        SOAPMessage result;
+        try {
+            result = soapConnection.call(message, endPoint);
+        }catch (SOAPException exception){
+            throw new RuntimeException("Unaable to send message: " + exception.getMessage());
+        }
+        return result;
+    }
     public static SubmitApplicationResponse processSubmitSOAPResponse(SOAPMessage soapResponse){
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try{
@@ -496,8 +529,6 @@ public class Main {
             throw new RuntimeException("Something wrong with soapResponse:" + ex.getMessage() );
         }
 
-
-
         String strMsg = out.toString();
         InputStream is = new ByteArrayInputStream(strMsg.getBytes());
         XMLInputFactory xif = XMLInputFactory.newFactory();
@@ -522,18 +553,59 @@ public class Main {
         return response;
     }
 
-    public static void main(String[] args) throws Exception {
+    public static GetBusinessEntityListResponse processGetBEResponse(SOAPMessage soapResponse){
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try{
+            if (soapResponse.getSOAPBody().hasFault()){
+                throw new RuntimeException("Soap request has fault: " + soapResponse.getSOAPBody().getFault().getFaultString());
+            }
+            soapResponse.writeTo(out);
+        }catch (SOAPException | IOException ex){
+            throw new RuntimeException("Something wrong with soapResponse:" + ex.getMessage() );
+        }
 
-        String addr = "https://api2.vetrf.ru:8002/platform/services/2.1/ApplicationManagementService";
-        String APIKey,IssuerId,login,auth;
-        File authInfo = new File("C:\\auth.txt");
-        Scanner sc = new Scanner(authInfo);
-        APIKey = sc.nextLine();
-        IssuerId = sc.nextLine();
-        login = sc.nextLine();
-        auth = sc.nextLine();
+        String strMsg = out.toString();
+        InputStream is = new ByteArrayInputStream(strMsg.getBytes());
+        XMLInputFactory xif = XMLInputFactory.newFactory();
+        XMLStreamReader xsr;
+        try {
+            xsr = xif.createXMLStreamReader(is);
+            xsr.nextTag();
+            xsr.nextTag();
+            xsr.nextTag();
+        }catch (XMLStreamException exception){
+            throw new RuntimeException("Unable to get xml body: " + exception.getMessage());
+        }
+        GetBusinessEntityListResponse response;
+        try{
+            JAXBContext contextResp = JAXBContext.newInstance(GetBusinessEntityListResponse.class);
+            Unmarshaller jaxbUnmarshaller = contextResp.createUnmarshaller();
+            response = (GetBusinessEntityListResponse) jaxbUnmarshaller.unmarshal(xsr);
+        }catch (JAXBException ex){
+            throw new RuntimeException("Unable to unmarshall: " + ex.getMessage());
+        }
+
+        return response;
+    }
+    public static void testGetBERequest(String addrEnterprise, String auth){
+        GetBusinessEntityListRequest getBErequest = new GetBusinessEntityListRequest();
+        SOAPMessage getBEResponse = sentGetBERequest(getBErequest,addrEnterprise,auth);
+        //getBEResponse.writeTo(System.out);
+        GetBusinessEntityListResponse response = processGetBEResponse(getBEResponse);
+        List<BusinessEntity> BEList = response.getBusinessEntityList().getBusinessEntity();
+        for (BusinessEntity entity: BEList
+        ) {
+            if (entity.getGuid() != null)
+                System.out.println(entity.getGuid());
+        }
+    }
+    public static void testRegisterRequest(String APIKey,
+                                           String IssuerId,
+                                           String login,
+                                           String addrManagementService, String auth) throws DatatypeConfigurationException {
+        //todo получить корректный логин и обработать ответ
         SubmitApplicationRequest apl = getSubmitRequest(APIKey, IssuerId, login);
-        SOAPMessage soapResponse = sendSubmitRequest(apl,addr,auth);
+        SOAPMessage soapResponse = sendSubmitRequest(apl,addrManagementService,auth);
         SubmitApplicationResponse response = processSubmitSOAPResponse(soapResponse);
         String aplId = response.getApplication().getApplicationId();
         System.out.println(response.getApplication().getStatus());
@@ -544,51 +616,25 @@ public class Main {
         receiveApplicationResultRequest.setApplicationId(aplId);
         receiveApplicationResultRequest.setIssuerId("28312a61-ae25-4128-8fd1-beeebbe87bf9");
 
-        SOAPMessage responseAPL = sendReceiveAplRequest(receiveApplicationResultRequest,addr,auth);
+        SOAPMessage responseAPL = sendReceiveAplRequest(receiveApplicationResultRequest,addrManagementService,auth);
         ReceiveApplicationResultResponse receiveApplicationResultResponse = processReceiveAplResponse(responseAPL);
         System.out.println(receiveApplicationResultResponse.getApplication().getStatus().value());
-        /*String addr = "https://api2.vetrf.ru:8002/platform/herriot/services/1.0/EnterpriseService";
-        GetBusinessEntityListRequest getBusinessEntityListRequest = new GetBusinessEntityListRequest();
-        JAXBContext context = JAXBContext.newInstance(GetBusinessEntityListRequest.class);
-        Marshaller mar= context.createMarshaller();
-        mar.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        StringWriter stringWriter = new StringWriter();
-        mar.marshal(getBusinessEntityListRequest,stringWriter);
+    }
+    public static void main(String[] args) throws Exception {
 
-        String soapBodyStr = stringWriter.toString();
-        SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
-        SOAPConnection soapConnection = soapConnectionFactory.createConnection();
 
-        MessageFactory messageFactory = MessageFactory.newInstance();
+        String addrAplManagementService = "https://api2.vetrf.ru:8002/platform/services/2.1/ApplicationManagementService";
+        String addrEnterpriseService = "https://api2.vetrf.ru:8002/platform/herriot/services/1.0/EnterpriseService";
+        String APIKey,IssuerId,login,auth;
+        File authInfo = new File("C:\\auth.txt");
+        Scanner sc = new Scanner(authInfo);
+        APIKey = sc.nextLine();
+        IssuerId = sc.nextLine();
+        login = sc.nextLine();
+        auth = sc.nextLine();
 
-        SOAPMessage soapMessage = messageFactory.createMessage();
-        MimeHeaders headers = soapMessage.getMimeHeaders();
-        headers.addHeader("SOAPAction", "GetBusinessEntityList");
-        headers.addHeader("Authorization","Basic aW5mb2Jpb25pa2EtMjQwODA4OjN2VVQ0cUQ4ZkM=");
-
-        SOAPEnvelope soapEnvelope = soapMessage.getSOAPPart().getEnvelope();
-        SOAPBody soapBody = soapMessage.getSOAPBody();
-        soapBody.addDocument(getDocument(soapBodyStr));
-        soapMessage.saveChanges();
-        soapMessage.writeTo(System.out);
-        SOAPMessage soapResponse = soapConnection.call(soapMessage,addr);
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        soapResponse.writeTo(out);
-        soapResponse.writeTo(System.out);
-        String strMsg = new String(out.toByteArray());
-        InputStream is = new ByteArrayInputStream(strMsg.getBytes());
-        XMLInputFactory xif = XMLInputFactory.newFactory();
-        XMLStreamReader xsr = xif.createXMLStreamReader(is);
-        xsr.nextTag();
-        xsr.nextTag();
-        xsr.nextTag();
-        JAXBContext contextResp = JAXBContext.newInstance(GetBusinessEntityListResponse.class);
-        Unmarshaller jaxbUnmarshaller = contextResp.createUnmarshaller();
-        GetBusinessEntityListResponse response = (GetBusinessEntityListResponse) jaxbUnmarshaller.unmarshal(xsr);
-        BusinessEntityList BEList = response.getBusinessEntityList();
-        List<BusinessEntity> list = BEList.getBusinessEntity();
-        System.out.println(list.get(0).getInn());
-        */
+        testRegisterRequest(APIKey, IssuerId, login, addrAplManagementService, auth);
+        //testGetBERequest(addrEnterpriseService,auth);
 
     }
 }

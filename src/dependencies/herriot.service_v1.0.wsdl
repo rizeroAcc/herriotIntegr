@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="HerriotService"
+                  targetNamespace="http://api.vetrf.ru/schema/cdm/herriot/service/v1"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="http://api.vetrf.ru/schema/cdm/herriot/service/v1"
+                  xmlns:def="http://api.vetrf.ru/schema/cdm/herriot/applications/v1">
+
+   <wsdl:documentation>
+      Service: HerriotService
+      Version: 1.0
+   </wsdl:documentation>
+
+   <!-- IMPORTS -->
+
+   <wsdl:types>
+      <xs:schema>
+         <xs:import namespace="http://api.vetrf.ru/schema/cdm/herriot/applications/v1"
+                    schemaLocation="herriot_applications_v1.0.xsd"/>
+      </xs:schema>
+   </wsdl:types>
+
+   <!-- MESSAGES -->
+
+   <!-- ===============================================================================-->
+   <!-- AMS.HRT.1 | Операции по работе с учетной карточкой животного (группы животных) -->
+   <!-- ===============================================================================-->
+
+   <!-- AMS.HRT.1.1 | Регистрация животного или группы животных -->
+   <wsdl:message name="RegisterAnimalRequest">
+      <wsdl:part name="request" element="def:registerAnimalRequest"/>
+   </wsdl:message>
+   <wsdl:message name="RegisterAnimalResponse">
+      <wsdl:part name="response" element="def:registerAnimalResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.1.2 | Внесение изменений в основные сведения о зарегистрированном животном или группе животных -->
+   <wsdl:message name="ModifyAnimalRegistrationRequest">
+      <wsdl:part name="request" element="def:modifyAnimalRegistrationRequest"/>
+   </wsdl:message>
+   <wsdl:message name="ModifyAnimalRegistrationResponse">
+      <wsdl:part name="response" element="def:modifyAnimalRegistrationResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.1.3 | Регистрация сведений о перемещении / смене собственника зарегистрированного животного или групп животных -->
+   <wsdl:message name="RegisterAnimalMovementEventRequest">
+      <wsdl:part name="request" element="def:registerAnimalMovementEventRequest"/>
+   </wsdl:message>
+   <wsdl:message name="RegisterAnimalMovementEventResponse">
+      <wsdl:part name="response" element="def:registerAnimalMovementEventResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.1.4 | Прекращение регистрации (выбытие) животного или группы животных -->
+   <wsdl:message name="TerminateAnimalRegistrationRequest">
+      <wsdl:part name="request" element="def:terminateAnimalRegistrationRequest"/>
+   </wsdl:message>
+   <wsdl:message name="TerminateAnimalRegistrationResponse">
+      <wsdl:part name="response" element="def:terminateAnimalRegistrationResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.1.5 | Аннулирование сведений о регистрации животного или группы животных -->
+   <wsdl:message name="WithdrawAnimalRegistrationRequest">
+      <wsdl:part name="request" element="def:withdrawAnimalRegistrationRequest"/>
+   </wsdl:message>
+   <wsdl:message name="WithdrawAnimalRegistrationResponse">
+      <wsdl:part name="response" element="def:withdrawAnimalRegistrationResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.1.6 | Получение основных актуальных сведений
+                       о регистрации животного или группы животных по глобальному идентификатору -->
+   <wsdl:message name="GetAnimalRegistrationByGuidRequest">
+      <wsdl:part name="request" element="def:getAnimalRegistrationByGuidRequest"/>
+   </wsdl:message>
+   <wsdl:message name="GetAnimalRegistrationByGuidResponse">
+      <wsdl:part name="response" element="def:getAnimalRegistrationByGuidResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.1.7 | Получение полных актуальных сведений (включая ветпрофмероприятия)
+                       о регистрации животного или группы животных по глобальному идентификатору -->
+   <wsdl:message name="GetFullAnimalRegistrationByGuidRequest">
+      <wsdl:part name="request" element="def:getFullAnimalRegistrationByGuidRequest"/>
+   </wsdl:message>
+   <wsdl:message name="GetFullAnimalRegistrationByGuidResponse">
+      <wsdl:part name="response" element="def:getFullAnimalRegistrationByGuidResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.1.8 | Получение всей истории изменения сведений
+                       о регистрации животного или группы животных по глобальному идентификатору -->
+   <wsdl:message name="GetAnimalRegistrationHistoryRequest">
+      <wsdl:part name="request" element="def:getAnimalRegistrationHistoryRequest"/>
+   </wsdl:message>
+   <wsdl:message name="GetAnimalRegistrationHistoryResponse">
+      <wsdl:part name="response" element="def:getAnimalRegistrationHistoryResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.1.9 | Получение списка изменений по основным сведениям
+                       о регистрации животного или группы животных за указанный период времени -->
+   <wsdl:message name="GetAnimalRegistrationChangesListRequest">
+      <wsdl:part name="request" element="def:getAnimalRegistrationChangesListRequest"/>
+   </wsdl:message>
+   <wsdl:message name="GetAnimalRegistrationChangesListResponse">
+      <wsdl:part name="response" element="def:getAnimalRegistrationChangesListResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.1.10 | Получение редакции (версии) основных сведений
+                 о регистрации животного или группы животных по идентификатору конкретной версии -->
+   <wsdl:message name="GetAnimalRegistrationByUuidRequest">
+      <wsdl:part name="request" element="def:getAnimalRegistrationByUuidRequest"/>
+   </wsdl:message>
+   <wsdl:message name="GetAnimalRegistrationByUuidResponse">
+      <wsdl:part name="response" element="def:getAnimalRegistrationByUuidResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.1.11 | Получение списка основных актуальных сведений
+                       о регистрации животного или группы животных с заданными параметрами фильтрации -->
+   <wsdl:message name="GetAnimalRegistrationListRequest">
+      <wsdl:part name="request" element="def:getAnimalRegistrationListRequest"/>
+   </wsdl:message>
+   <wsdl:message name="GetAnimalRegistrationListResponse">
+      <wsdl:part name="response" element="def:getAnimalRegistrationListResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.1.12 | Получение редакции (версии) полных сведений (включая ветпрофмероприятия)
+                    о регистрации животного или группы животных по идентификатору конкретной версии -->
+   <wsdl:message name="GetFullAnimalRegistrationByUuidRequest">
+      <wsdl:part name="request" element="def:getFullAnimalRegistrationByUuidRequest"/>
+   </wsdl:message>
+   <wsdl:message name="GetFullAnimalRegistrationByUuidResponse">
+      <wsdl:part name="response" element="def:getFullAnimalRegistrationByUuidResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.1.13 | Пополнение зарегистрированной группы животных -->
+   <wsdl:message name="IncludeToAnimalGroupRequest">
+      <wsdl:part name="request" element="def:includeToAnimalGroupRequest"/>
+   </wsdl:message>
+   <wsdl:message name="IncludeToAnimalGroupResponse">
+      <wsdl:part name="response" element="def:includeToAnimalGroupResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.1.14 | Исключение животных из зарегистрированной группы -->
+   <wsdl:message name="ExcludeFromAnimalGroupRequest">
+      <wsdl:part name="request" element="def:excludeFromAnimalGroupRequest"/>
+   </wsdl:message>
+   <wsdl:message name="ExcludeFromAnimalGroupResponse">
+      <wsdl:part name="response" element="def:excludeFromAnimalGroupResponse"/>
+   </wsdl:message>
+
+   <!-- ==========================================================================================-->
+   <!-- AMS.HRT.2 | Операции по работе со сведениями об идентификации животного (группы животных) -->
+   <!-- ==========================================================================================-->
+
+   <!-- AMS.HRT.2.1 |  Регистрация сведений об идентификации (маркирование)
+                       зарегистрированного животного или группы животных -->
+   <wsdl:message name="RegisterAnimalIdentityRequest">
+      <wsdl:part name="request" element="def:registerAnimalIdentityRequest"/>
+   </wsdl:message>
+   <wsdl:message name="RegisterAnimalIdentityResponse">
+      <wsdl:part name="response" element="def:registerAnimalIdentityResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.2.2 |  Прекращение регистрации сведений об идентификации (снятие средства маркирования)
+                    зарегистрированного животного или группы животных -->
+   <wsdl:message name="RemoveAnimalIdentityRequest">
+      <wsdl:part name="request" element="def:removeAnimalIdentityRequest"/>
+   </wsdl:message>
+   <wsdl:message name="RemoveAnimalIdentityResponse">
+      <wsdl:part name="response" element="def:removeAnimalIdentityResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.2.3 |  Перерегистрация сведений об идентификации (замена средства маркирования)
+                    зарегистрированного животного или группы животных -->
+   <wsdl:message name="ReplaceAnimalIdentityRequest">
+      <wsdl:part name="request" element="def:replaceAnimalIdentityRequest"/>
+   </wsdl:message>
+   <wsdl:message name="ReplaceAnimalIdentityResponse">
+      <wsdl:part name="response" element="def:replaceAnimalIdentityResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.2.4 |  Заявка о необходимости перерегистрации сведений об идентификации (замене средства маркирования)
+                    зарегистрированного животного или группы животных -->
+   <wsdl:message name="ReplaceAnimalIdentityNotificationRequest">
+      <wsdl:part name="request" element="def:replaceAnimalIdentityNotificationRequest"/>
+   </wsdl:message>
+   <wsdl:message name="ReplaceAnimalIdentityNotificationResponse">
+      <wsdl:part name="response" element="def:replaceAnimalIdentityNotificationResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.2.5 |  Аннулирование сведений об идентификации (удаление средства маркирования)
+                    зарегистрированного животного или группы животных -->
+   <wsdl:message name="WithdrawAnimalIdentityRequest">
+      <wsdl:part name="request" element="def:withdrawAnimalIdentityRequest"/>
+   </wsdl:message>
+   <wsdl:message name="WithdrawAnimalIdentityResponse">
+      <wsdl:part name="response" element="def:withdrawAnimalIdentityResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.2.6 |  Проверка статусов УНСМ (уникальных номеров средств маркирования) -->
+   <wsdl:message name="VerifyAnimalIDRequest">
+      <wsdl:part name="request" element="def:verifyAnimalIDRequest"/>
+   </wsdl:message>
+   <wsdl:message name="VerifyAnimalIDResponse">
+      <wsdl:part name="response" element="def:verifyAnimalIDResponse"/>
+   </wsdl:message>
+
+   <!-- ===========================================================================================================-->
+   <!-- AMS.HRT.3 | Операции по работе с ветеринарными профилактическими мероприятиями животного (группы животных) -->
+   <!-- ===========================================================================================================-->
+
+   <!-- AMS.HRT.3.1 |  Регистрация ветеринарного профилактического мероприятия -->
+   <wsdl:message name="RegisterAnimalVeterinaryEventRequest">
+      <wsdl:part name="request" element="def:registerAnimalVeterinaryEventRequest"/>
+   </wsdl:message>
+   <wsdl:message name="RegisterAnimalVeterinaryEventResponse">
+      <wsdl:part name="response" element="def:registerAnimalVeterinaryEventResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.3.2 |  Редактирование сведений о ветеринарном профилактическом мероприятии -->
+   <wsdl:message name="ModifyAnimalVeterinaryEventRequest">
+      <wsdl:part name="request" element="def:modifyAnimalVeterinaryEventRequest"/>
+   </wsdl:message>
+   <wsdl:message name="ModifyAnimalVeterinaryEventResponse">
+      <wsdl:part name="response" element="def:modifyAnimalVeterinaryEventResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.3.3 |  Подтверждение сведений о ветеринарном профилактическом мероприятии -->
+   <wsdl:message name="ConfirmAnimalVeterinaryEventRequest">
+      <wsdl:part name="request" element="def:confirmAnimalVeterinaryEventRequest"/>
+   </wsdl:message>
+   <wsdl:message name="ConfirmAnimalVeterinaryEventResponse">
+      <wsdl:part name="response" element="def:confirmAnimalVeterinaryEventResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.3.4 |  Аннулирование сведений о ветеринарном профилактическом мероприятии -->
+   <wsdl:message name="WithdrawAnimalVeterinaryEventRequest">
+      <wsdl:part name="request" element="def:withdrawAnimalVeterinaryEventRequest"/>
+   </wsdl:message>
+   <wsdl:message name="WithdrawAnimalVeterinaryEventResponse">
+      <wsdl:part name="response" element="def:withdrawAnimalVeterinaryEventResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.3.5 |  Получение актуальных сведений
+                        о зарегистрированном ветеринарном профилактическом мероприятии по глобальному идентификатору -->
+   <wsdl:message name="GetAnimalVeterinaryEventByGuidRequest">
+      <wsdl:part name="request" element="def:getAnimalVeterinaryEventByGuidRequest"/>
+   </wsdl:message>
+   <wsdl:message name="GetAnimalVeterinaryEventByGuidResponse">
+      <wsdl:part name="response" element="def:getAnimalVeterinaryEventByGuidResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.3.6 |  Получение списка изменений сведений
+                      о зарегистрированных ветеринарных профилактических мероприятий за указанный период времени -->
+   <wsdl:message name="GetAnimalVeterinaryEventChangesListRequest">
+      <wsdl:part name="request" element="def:getAnimalVeterinaryEventChangesListRequest"/>
+   </wsdl:message>
+   <wsdl:message name="GetAnimalVeterinaryEventChangesListResponse">
+      <wsdl:part name="response" element="def:getAnimalVeterinaryEventChangesListResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.3.7 |  Получение всей истории изменений сведений
+                     о зарегистрированном ветеринарном профилактическом мероприятии по глобальному идентификатору -->
+   <wsdl:message name="GetAnimalVeterinaryEventHistoryRequest">
+      <wsdl:part name="request" element="def:getAnimalVeterinaryEventHistoryRequest"/>
+   </wsdl:message>
+   <wsdl:message name="GetAnimalVeterinaryEventHistoryResponse">
+      <wsdl:part name="response" element="def:getAnimalVeterinaryEventHistoryResponse"/>
+   </wsdl:message>
+
+   <!-- AMS.HRT.3.8 |  Получение редакции (версии) сведений
+                     о зарегистрированном ветеринарном профилактическом мероприятии по идентификатору версии -->
+   <wsdl:message name="GetAnimalVeterinaryEventByUuidRequest">
+      <wsdl:part name="request" element="def:getAnimalVeterinaryEventByUuidRequest"/>
+   </wsdl:message>
+   <wsdl:message name="GetAnimalVeterinaryEventByUuidResponse">
+      <wsdl:part name="response" element="def:getAnimalVeterinaryEventByUuidResponse"/>
+   </wsdl:message>
+
+
+   <!-- PORT -->
+
+   <wsdl:portType name="HerriotServicePortType">
+      <wsdl:operation name="registerAnimalRequest">
+         <wsdl:input message="tns:RegisterAnimalRequest"/>
+         <wsdl:output message="tns:RegisterAnimalResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="modifyAnimalRegistrationRequest">
+         <wsdl:input message="tns:ModifyAnimalRegistrationRequest"/>
+         <wsdl:output message="tns:ModifyAnimalRegistrationResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="registerAnimalMovementEventRequest">
+         <wsdl:input message="tns:RegisterAnimalMovementEventRequest"/>
+         <wsdl:output message="tns:RegisterAnimalMovementEventResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="terminateAnimalRegistrationRequest">
+         <wsdl:input message="tns:TerminateAnimalRegistrationRequest"/>
+         <wsdl:output message="tns:TerminateAnimalRegistrationResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="withdrawAnimalRegistrationRequest">
+         <wsdl:input message="tns:WithdrawAnimalRegistrationRequest"/>
+         <wsdl:output message="tns:WithdrawAnimalRegistrationResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAnimalRegistrationByGuidRequest">
+         <wsdl:input message="tns:GetAnimalRegistrationByGuidRequest"/>
+         <wsdl:output message="tns:GetAnimalRegistrationByGuidResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="getFullAnimalRegistrationByGuidRequest">
+         <wsdl:input message="tns:GetFullAnimalRegistrationByGuidRequest"/>
+         <wsdl:output message="tns:GetFullAnimalRegistrationByGuidResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAnimalRegistrationHistoryRequest">
+         <wsdl:input message="tns:GetAnimalRegistrationHistoryRequest"/>
+         <wsdl:output message="tns:GetAnimalRegistrationHistoryResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAnimalRegistrationChangesListRequest">
+         <wsdl:input message="tns:GetAnimalRegistrationChangesListRequest"/>
+         <wsdl:output message="tns:GetAnimalRegistrationChangesListResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAnimalRegistrationListRequest">
+         <wsdl:input message="tns:GetAnimalRegistrationListRequest"/>
+         <wsdl:output message="tns:GetAnimalRegistrationListResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAnimalRegistrationByUuidRequest">
+         <wsdl:input message="tns:GetAnimalRegistrationByUuidRequest"/>
+         <wsdl:output message="tns:GetAnimalRegistrationByUuidResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="getFullAnimalRegistrationByUuidRequest">
+         <wsdl:input message="tns:GetFullAnimalRegistrationByUuidRequest"/>
+         <wsdl:output message="tns:GetFullAnimalRegistrationByUuidResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="includeToAnimalGroupRequest">
+         <wsdl:input message="tns:IncludeToAnimalGroupRequest"/>
+         <wsdl:output message="tns:IncludeToAnimalGroupResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="excludeFromAnimalGroupRequest">
+         <wsdl:input message="tns:ExcludeFromAnimalGroupRequest"/>
+         <wsdl:output message="tns:ExcludeFromAnimalGroupResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="registerAnimalIdentityRequest">
+         <wsdl:input message="tns:RegisterAnimalIdentityRequest"/>
+         <wsdl:output message="tns:RegisterAnimalIdentityResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="removeAnimalIdentityRequest">
+         <wsdl:input message="tns:RemoveAnimalIdentityRequest"/>
+         <wsdl:output message="tns:RemoveAnimalIdentityResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="replaceAnimalIdentityRequest">
+         <wsdl:input message="tns:ReplaceAnimalIdentityRequest"/>
+         <wsdl:output message="tns:ReplaceAnimalIdentityResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="replaceAnimalIdentityNotificationRequest">
+         <wsdl:input message="tns:ReplaceAnimalIdentityNotificationRequest"/>
+         <wsdl:output message="tns:ReplaceAnimalIdentityNotificationResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="withdrawAnimalIdentityRequest">
+         <wsdl:input message="tns:WithdrawAnimalIdentityRequest"/>
+         <wsdl:output message="tns:WithdrawAnimalIdentityResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="verifyAnimalIDRequest">
+         <wsdl:input message="tns:VerifyAnimalIDRequest"/>
+         <wsdl:output message="tns:VerifyAnimalIDResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="registerAnimalVeterinaryEventRequest">
+         <wsdl:input message="tns:RegisterAnimalVeterinaryEventRequest"/>
+         <wsdl:output message="tns:RegisterAnimalVeterinaryEventResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="modifyAnimalVeterinaryEventRequest">
+         <wsdl:input message="tns:ModifyAnimalVeterinaryEventRequest"/>
+         <wsdl:output message="tns:ModifyAnimalVeterinaryEventResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="confirmAnimalVeterinaryEventRequest">
+         <wsdl:input message="tns:ConfirmAnimalVeterinaryEventRequest"/>
+         <wsdl:output message="tns:ConfirmAnimalVeterinaryEventResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="withdrawAnimalVeterinaryEventRequest">
+         <wsdl:input message="tns:WithdrawAnimalVeterinaryEventRequest"/>
+         <wsdl:output message="tns:WithdrawAnimalVeterinaryEventResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAnimalVeterinaryEventByGuidRequest">
+         <wsdl:input message="tns:GetAnimalVeterinaryEventByGuidRequest"/>
+         <wsdl:output message="tns:GetAnimalVeterinaryEventByGuidResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAnimalVeterinaryEventChangesListRequest">
+         <wsdl:input message="tns:GetAnimalVeterinaryEventChangesListRequest"/>
+         <wsdl:output message="tns:GetAnimalVeterinaryEventChangesListResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAnimalVeterinaryEventHistoryRequest">
+         <wsdl:input message="tns:GetAnimalVeterinaryEventHistoryRequest"/>
+         <wsdl:output message="tns:GetAnimalVeterinaryEventHistoryResponse"/>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAnimalVeterinaryEventByUuidRequest">
+         <wsdl:input message="tns:GetAnimalVeterinaryEventByUuidRequest"/>
+         <wsdl:output message="tns:GetAnimalVeterinaryEventByUuidResponse"/>
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <!-- BINDING -->
+
+   <wsdl:binding name="AMSHerriotBinding"
+                 type="tns:HerriotServicePortType">
+      <soap:binding style="document"
+                    transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="registerAnimalRequest">
+         <soap:operation soapAction="registerAnimalRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="modifyAnimalRegistrationRequest">
+         <soap:operation soapAction="modifyAnimalRegistrationRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="registerAnimalMovementEventRequest">
+         <soap:operation soapAction="registerAnimalMovementEventRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="terminateAnimalRegistrationRequest">
+         <soap:operation soapAction="terminateAnimalRegistrationRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="withdrawAnimalRegistrationRequest">
+         <soap:operation soapAction="withdrawAnimalRegistrationRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAnimalRegistrationByGuidRequest">
+         <soap:operation soapAction="getAnimalRegistrationByGuidRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="getFullAnimalRegistrationByGuidRequest">
+         <soap:operation soapAction="getFullAnimalRegistrationByGuidRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAnimalRegistrationHistoryRequest">
+         <soap:operation soapAction="getAnimalRegistrationHistoryRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAnimalRegistrationChangesListRequest">
+         <soap:operation soapAction="getAnimalRegistrationChangesListRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAnimalRegistrationListRequest">
+         <soap:operation soapAction="getAnimalRegistrationListRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAnimalRegistrationByUuidRequest">
+         <soap:operation soapAction="getAnimalRegistrationByUuidRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="getFullAnimalRegistrationByUuidRequest">
+         <soap:operation soapAction="getFullAnimalRegistrationByUuidRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="includeToAnimalGroupRequest">
+         <soap:operation soapAction="includeToAnimalGroupRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="excludeFromAnimalGroupRequest">
+         <soap:operation soapAction="excludeFromAnimalGroupRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="registerAnimalIdentityRequest">
+         <soap:operation soapAction="registerAnimalIdentityRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="removeAnimalIdentityRequest">
+         <soap:operation soapAction="removeAnimalIdentityRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="replaceAnimalIdentityRequest">
+         <soap:operation soapAction="replaceAnimalIdentityRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="replaceAnimalIdentityNotificationRequest">
+         <soap:operation soapAction="replaceAnimalIdentityNotificationRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="withdrawAnimalIdentityRequest">
+         <soap:operation soapAction="withdrawAnimalIdentityRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="verifyAnimalIDRequest">
+         <soap:operation soapAction="verifyAnimalIDRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="registerAnimalVeterinaryEventRequest">
+         <soap:operation soapAction="registerAnimalVeterinaryEventRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="modifyAnimalVeterinaryEventRequest">
+         <soap:operation soapAction="modifyAnimalVeterinaryEventRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="confirmAnimalVeterinaryEventRequest">
+         <soap:operation soapAction="confirmAnimalVeterinaryEventRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="withdrawAnimalVeterinaryEventRequest">
+         <soap:operation soapAction="withdrawAnimalVeterinaryEventRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAnimalVeterinaryEventByGuidRequest">
+         <soap:operation soapAction="getAnimalVeterinaryEventByGuidRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAnimalVeterinaryEventChangesListRequest">
+         <soap:operation soapAction="getAnimalVeterinaryEventChangesListRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAnimalVeterinaryEventHistoryRequest">
+         <soap:operation soapAction="getAnimalVeterinaryEventHistoryRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+      <wsdl:operation name="getAnimalVeterinaryEventByUuidRequest">
+         <soap:operation soapAction="getAnimalVeterinaryEventByUuidRequest"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+
+   </wsdl:binding>
+</wsdl:definitions>

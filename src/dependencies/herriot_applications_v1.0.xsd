@@ -1,0 +1,1815 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<xs:schema targetNamespace="http://api.vetrf.ru/schema/cdm/herriot/applications/v1"
+           xmlns:hrt="http://api.vetrf.ru/schema/cdm/herriot/applications/v1"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:bs="http://api.vetrf.ru/schema/cdm/base"
+           xmlns:apl="http://api.vetrf.ru/schema/cdm/application"
+           xmlns:dt="http://api.vetrf.ru/schema/cdm/dictionary/v2"
+           xmlns:vd="http://api.vetrf.ru/schema/cdm/mercury/vet-document/v2"
+           elementFormDefault="qualified" version="1.0-beta">
+
+    <xs:import namespace="http://api.vetrf.ru/schema/cdm/base" schemaLocation="base_v2.1.xsd"/>
+    <xs:import namespace="http://api.vetrf.ru/schema/cdm/application" schemaLocation="application_v2.1.xsd"/>
+    <xs:import namespace="http://api.vetrf.ru/schema/cdm/dictionary/v2" schemaLocation="dictionary_v2.5.xsd"/>
+    <xs:import namespace="http://api.vetrf.ru/schema/cdm/mercury/vet-document/v2" schemaLocation="document_v2.5.xsd"/>
+    <xs:import namespace="http://api.vetrf.ru/schema/cdm/codelist/v2" schemaLocation="codelist_v2.5r4.xsd"/>
+
+    <!-- Application Elements -->
+
+    <!-- ===============================================================================-->
+    <!-- AMS.HRT.1 | Операции по работе с учетной карточкой животного (группы животных) -->
+    <!-- ===============================================================================-->
+
+    <!-- AMS.HRT.1.1 | Регистрация животного или группы животных -->
+    <xs:element name="registerAnimalRequest" type="hrt:RegisterAnimalRequest"/>
+    <xs:element name="registerAnimalResponse" type="hrt:RegisterAnimalResponse"/>
+
+    <!-- AMS.HRT.1.2 | Внесение изменений в основные сведения о зарегистрированном животном или группе животных -->
+    <xs:element name="modifyAnimalRegistrationRequest" type="hrt:ModifyAnimalRegistrationRequest"/>
+    <xs:element name="modifyAnimalRegistrationResponse" type="hrt:ModifyAnimalRegistrationResponse"/>
+
+    <!-- AMS.HRT.1.3 | Регистрация сведений о перемещении / смене собственника зарегистрированного животного или групп животных -->
+    <xs:element name="registerAnimalMovementEventRequest" type="hrt:RegisterAnimalMovementEventRequest"/>
+    <xs:element name="registerAnimalMovementEventResponse" type="hrt:RegisterAnimalMovementEventResponse"/>
+
+    <!-- AMS.HRT.1.4 | Прекращение регистрации (выбытие) животного или группы животных -->
+    <xs:element name="terminateAnimalRegistrationRequest" type="hrt:TerminateAnimalRegistrationRequest"/>
+    <xs:element name="terminateAnimalRegistrationResponse" type="hrt:TerminateAnimalRegistrationResponse"/>
+
+    <!-- AMS.HRT.1.5 | Аннулирование сведений о регистрации животного или группы животных -->
+    <xs:element name="withdrawAnimalRegistrationRequest" type="hrt:WithdrawAnimalRegistrationRequest"/>
+    <xs:element name="withdrawAnimalRegistrationResponse" type="hrt:WithdrawAnimalRegistrationResponse"/>
+
+    <!-- AMS.HRT.1.6 | Получение основных актуальных сведений
+                       о регистрации животного или группы животных по глобальному идентификатору -->
+    <xs:element name="getAnimalRegistrationByGuidRequest" type="hrt:GetAnimalRegistrationByGuidRequest"/>
+    <xs:element name="getAnimalRegistrationByGuidResponse" type="hrt:GetAnimalRegistrationByGuidResponse"/>
+
+    <!-- AMS.HRT.1.7 | Получение полных актуальных сведений (включая ветпрофмероприятия)
+                       о регистрации животного или группы животных по глобальному идентификатору -->
+    <xs:element name="getFullAnimalRegistrationByGuidRequest" type="hrt:GetFullAnimalRegistrationByGuidRequest"/>
+    <xs:element name="getFullAnimalRegistrationByGuidResponse" type="hrt:GetFullAnimalRegistrationByGuidResponse"/>
+
+    <!-- AMS.HRT.1.8 | Получение всей истории изменения сведений
+                       о регистрации животного или группы животных по глобальному идентификатору -->
+    <xs:element name="getAnimalRegistrationHistoryRequest" type="hrt:GetAnimalRegistrationHistoryRequest"/>
+    <xs:element name="getAnimalRegistrationHistoryResponse" type="hrt:GetAnimalRegistrationHistoryResponse"/>
+
+    <!-- AMS.HRT.1.9 | Получение списка изменений по основным сведениям
+                       о регистрации животного или группы животных за указанный период времени -->
+    <xs:element name="getAnimalRegistrationChangesListRequest" type="hrt:GetAnimalRegistrationChangesListRequest"/>
+    <xs:element name="getAnimalRegistrationChangesListResponse" type="hrt:GetAnimalRegistrationChangesListResponse"/>
+
+    <!-- AMS.HRT.1.10 | Получение редакции (версии) основных сведений
+                        о регистрации животного или группы животных по идентификатору конкретной версии -->
+    <xs:element name="getAnimalRegistrationByUuidRequest" type="hrt:GetAnimalRegistrationByUuidRequest"/>
+    <xs:element name="getAnimalRegistrationByUuidResponse" type="hrt:GetAnimalRegistrationByUuidResponse"/>
+
+    <!-- AMS.HRT.1.11 | Получение списка основных актуальных сведений
+                        о регистрации животного или группы животных с заданными параметрами фильтрации -->
+    <xs:element name="getAnimalRegistrationListRequest" type="hrt:GetAnimalRegistrationListRequest"/>
+    <xs:element name="getAnimalRegistrationListResponse" type="hrt:GetAnimalRegistrationListResponse"/>
+
+    <!-- AMS.HRT.1.12 | Получение редакции (версии) полных сведений (включая ветпрофмероприятия)
+                        о регистрации животного или группы животных по идентификатору конкретной версии -->
+    <xs:element name="getFullAnimalRegistrationByUuidRequest" type="hrt:GetFullAnimalRegistrationByUuidRequest"/>
+    <xs:element name="getFullAnimalRegistrationByUuidResponse" type="hrt:GetFullAnimalRegistrationByUuidResponse"/>
+
+    <!-- AMS.HRT.1.13 | Пополнение зарегистрированной группы животных -->
+    <xs:element name="includeToAnimalGroupRequest" type="hrt:IncludeToAnimalGroupRequest"/>
+    <xs:element name="includeToAnimalGroupResponse" type="hrt:IncludeToAnimalGroupResponse"/>
+
+    <!-- AMS.HRT.1.14 | Исключение животных из зарегистрированной группы -->
+    <xs:element name="excludeFromAnimalGroupRequest" type="hrt:ExcludeFromAnimalGroupRequest"/>
+    <xs:element name="excludeFromAnimalGroupResponse" type="hrt:ExcludeFromAnimalGroupResponse"/>
+
+
+    <!-- ==========================================================================================-->
+    <!-- AMS.HRT.2 | Операции по работе со сведениями об идентификации животного (группы животных) -->
+    <!-- ==========================================================================================-->
+
+    <!-- AMS.HRT.2.1 |  Регистрация сведений об идентификации (маркирование)
+                        зарегистрированного животного или группы животных -->
+    <xs:element name="registerAnimalIdentityRequest" type="hrt:RegisterAnimalIdentityRequest"/>
+    <xs:element name="registerAnimalIdentityResponse" type="hrt:RegisterAnimalIdentityResponse"/>
+
+    <!-- AMS.HRT.2.2 |  Прекращение регистрации сведений об идентификации (снятие средства маркирования)
+                        зарегистрированного животного или группы животных -->
+    <xs:element name="removeAnimalIdentityRequest" type="hrt:RemoveAnimalIdentityRequest"/>
+    <xs:element name="removeAnimalIdentityResponse" type="hrt:RemoveAnimalIdentityResponse"/>
+
+    <!-- AMS.HRT.2.3 |  Перерегистрация сведений об идентификации (замена средства маркирования)
+                        зарегистрированного животного или группы животных -->
+    <xs:element name="replaceAnimalIdentityRequest" type="hrt:ReplaceAnimalIdentityRequest"/>
+    <xs:element name="replaceAnimalIdentityResponse" type="hrt:ReplaceAnimalIdentityResponse"/>
+
+    <!-- AMS.HRT.2.4 |  Уведомление о необходимости перерегистрации сведений об идентификации (замене средства маркирования)
+                        зарегистрированного животного или группы животных -->
+    <xs:element name="replaceAnimalIdentityNotificationRequest" type="hrt:ReplaceAnimalIdentityNotificationRequest"/>
+    <xs:element name="replaceAnimalIdentityNotificationResponse" type="hrt:ReplaceAnimalIdentityNotificationResponse"/>
+
+    <!-- AMS.HRT.2.5 |  Аннулирование сведений об идентификации (удаление средства маркирования)
+                        зарегистрированного животного или группы животных -->
+    <xs:element name="withdrawAnimalIdentityRequest" type="hrt:WithdrawAnimalIdentityRequest"/>
+    <xs:element name="withdrawAnimalIdentityResponse" type="hrt:WithdrawAnimalIdentityResponse"/>
+
+    <!-- AMS.HRT.2.6 |  Проверка статусов УНСМ (уникальных номеров средств маркирования) -->
+    <xs:element name="verifyAnimalIDRequest" type="hrt:VerifyAnimalIDRequest"/>
+    <xs:element name="verifyAnimalIDResponse" type="hrt:VerifyAnimalIDResponse"/>
+
+
+    <!-- ===========================================================================================================-->
+    <!-- AMS.HRT.3 | Операции по работе с ветеринарными профилактическими мероприятиями животного (группы животных) -->
+    <!-- ===========================================================================================================-->
+
+    <!-- AMS.HRT.3.1 |  Регистрация ветеринарного профилактического мероприятия -->
+    <xs:element name="registerAnimalVeterinaryEventRequest" type="hrt:RegisterAnimalVeterinaryEventRequest"/>
+    <xs:element name="registerAnimalVeterinaryEventResponse" type="hrt:RegisterAnimalVeterinaryEventResponse"/>
+
+    <!-- AMS.HRT.3.2 |  Редактирование сведений о ветеринарном профилактическом мероприятии -->
+    <xs:element name="modifyAnimalVeterinaryEventRequest" type="hrt:ModifyAnimalVeterinaryEventRequest"/>
+    <xs:element name="modifyAnimalVeterinaryEventResponse" type="hrt:ModifyAnimalVeterinaryEventResponse"/>
+
+    <!-- AMS.HRT.3.3 |  Подтверждение сведений о ветеринарном профилактическом мероприятии -->
+    <xs:element name="confirmAnimalVeterinaryEventRequest" type="hrt:ConfirmAnimalVeterinaryEventRequest"/>
+    <xs:element name="confirmAnimalVeterinaryEventResponse" type="hrt:ConfirmAnimalVeterinaryEventResponse"/>
+
+    <!-- AMS.HRT.3.4 |  Аннулирование сведений о ветеринарном профилактическом мероприятии -->
+    <xs:element name="withdrawAnimalVeterinaryEventRequest" type="hrt:WithdrawAnimalVeterinaryEventRequest"/>
+    <xs:element name="withdrawAnimalVeterinaryEventResponse" type="hrt:WithdrawAnimalVeterinaryEventResponse"/>
+
+    <!-- AMS.HRT.3.5 |  Получение актуальных сведений
+                        о зарегистрированном ветеринарном профилактическом мероприятии по глобальному идентификатору -->
+    <xs:element name="getAnimalVeterinaryEventByGuidRequest" type="hrt:GetAnimalVeterinaryEventByGuidRequest"/>
+    <xs:element name="getAnimalVeterinaryEventByGuidResponse" type="hrt:GetAnimalVeterinaryEventByGuidResponse"/>
+
+    <!-- AMS.HRT.3.6 |  Получение списка изменений сведений
+                        о зарегистрированных ветеринарных профилактических мероприятий за указанный период времени -->
+    <xs:element name="getAnimalVeterinaryEventChangesListRequest" type="hrt:GetAnimalVeterinaryEventChangesListRequest"/>
+    <xs:element name="getAnimalVeterinaryEventChangesListResponse" type="hrt:GetAnimalVeterinaryEventChangesListResponse"/>
+
+    <!-- AMS.HRT.3.7 |  Получение всей истории изменений сведений
+                        о зарегистрированном ветеринарном профилактическом мероприятии по глобальному идентификатору -->
+    <xs:element name="getAnimalVeterinaryEventHistoryRequest" type="hrt:GetAnimalVeterinaryEventHistoryRequest"/>
+    <xs:element name="getAnimalVeterinaryEventHistoryResponse" type="hrt:GetAnimalVeterinaryEventHistoryResponse"/>
+
+    <!-- AMS.HRT.3.8 |  Получение редакции (версии) сведений
+                        о зарегистрированном ветеринарном профилактическом мероприятии по идентификатору версии -->
+    <xs:element name="getAnimalVeterinaryEventByUuidRequest" type="hrt:GetAnimalVeterinaryEventByUuidRequest"/>
+    <xs:element name="getAnimalVeterinaryEventByUuidResponse" type="hrt:GetAnimalVeterinaryEventByUuidResponse"/>
+
+
+    <!-- Application types -->
+
+    <!-- Базовый тип любого запроса, включающий в себя сведения об инициаторе -->
+    <xs:complexType name="HerriotApplicationRequest">
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationData">
+                <xs:sequence>
+                    <xs:element name="localTransactionId" type="bs:UUID" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="initiator" type="vd:User" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="sessionToken" type="dt:OTPToken" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <!-- ===============================================================================-->
+    <!-- AMS.HRT.1 | Операции по работе с учетной карточкой животного (группы животных) -->
+    <!-- ===============================================================================-->
+
+    <xs:complexType name="RegisterAnimalRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.1</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Регистрация животного или группы животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="animalRegistration" type="vd:AnimalRegistration" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Проект учётной карточки животного или группы животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="RegisterAnimalResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.1</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Регистрация животного или группы животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="animalRegistration" type="vd:AnimalRegistration" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Зарегистрированная учётная карточка животного или группы животного
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ModifyAnimalRegistrationRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.2</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Внесение изменений в основные сведения о зарегистрированном животном или группе животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="animalRegistration" type="vd:AnimalRegistration" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Проект изменений существующей учётной карточки с указанным уникальным идентификатором версии
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ModifyAnimalRegistrationResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.2</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Внесение изменений в основные сведения о зарегистрированном животном или группе животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="animalRegistration" type="vd:AnimalRegistration" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Обновленная учётная карточка животного или группы животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RegisterAnimalMovementEventRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.3</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Регистрация сведений о перемещении / смене собственника зарегистрированного животного или групп животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="referencedMovementEvent" type="vd:AnimalMovementEvent" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Сведения о перемещении
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="movementAnimalRegistrationList" type="vd:AnimalRegistrationList" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Cведения о перемещаемых зарегистрированных животных или групп животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="RegisterAnimalMovementEventResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.3</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Регистрация сведений о перемещении / смене собственника зарегистрированного животного или групп животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="movementAnimalRegistrationList" type="vd:AnimalRegistrationList" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Список учётных карточек перемещаемых животных или групп животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="referencedAnimalRegistrationList" type="vd:AnimalRegistrationList" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Список связанных карточек животных, которые в явном виде не участвовали в запросе, но были
+                                изменены в результате выполнения операции (например, перемещение индивидуального животного,
+                                входящего в группу, влечёт изменение данной группы).
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TerminateAnimalRegistrationRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.4</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Прекращение регистрации (выбытие) животного или группы животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="referencedLifecycleEvent" type="vd:AnimalLifecycleEvent" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Сведения о выбытии животного или группы животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="animalRegistrationRef" type="vd:AnimalRegistration" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Учётная карточка животного или группы животных, в отношении которой регистрируется выбытие
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TerminateAnimalRegistrationResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.4</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Прекращение регистрации (выбытие) животного или группы животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="terminatedAnimalRegistrationList" type="vd:AnimalRegistrationList" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Список учётных карточек выбывших животных или групп животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="referencedAnimalRegistrationList" type="vd:AnimalRegistrationList" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Список связанных карточек животных, которые в явном виде не участвовали в запросе, но были
+                                изменены в результате выполнения операции (например, обновление группы животных,
+                                в которой содержалось выбывшее индивидуальное животное из запроса).
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="WithdrawAnimalRegistrationRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.5</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Аннулирование сведений о регистрации животного или группы животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="withdrawDetails" type="vd:AnimalRegistrationStatusChange" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Сведения об аннулировании учётной карточки животного
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="animalRegistrationRef" type="vd:AnimalRegistration" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Учётная карточка животного или группы животных, в отношении которой регистрируется аннулирование
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="WithdrawAnimalRegistrationResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.5</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Аннулирование сведений о регистрации животного или группы животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="animalRegistration" type="vd:AnimalRegistration" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Обновленная учётная карточка животного или группы животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="GetAnimalRegistrationByGuidRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.6</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Получение основных актуальных сведений
+                о регистрации животного или группы животных по глобальному идентификатору
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="animalRegistrationGuid" type="bs:UUID" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Глобальный идентификатор регистрационной карточки животного или группы животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="GetAnimalRegistrationByGuidResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.6</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Получение основных актуальных сведений
+                о регистрации животного или группы животных по глобальному идентификатору
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="animalRegistration" type="vd:AnimalRegistration" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Актуальная редакция (версия) регистрационной карточки животного или группы животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="GetFullAnimalRegistrationByGuidRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.7</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Получение полных актуальных сведений (включая ветпрофмероприятия)
+                о регистрации животного или группы животных по глобальному идентификатору
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="animalRegistrationGuid" type="bs:UUID" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Глобальный идентификатор регистрационной карточки животного или группы животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="GetFullAnimalRegistrationByGuidResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.7</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Получение полных актуальных сведений (включая ветпрофмероприятия)
+                о регистрации животного или группы животных по глобальному идентификатору
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="animalRegistration" type="vd:AnimalRegistration" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Актуальная редакция (версия) регистрационной карточки животного или группы животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="GetAnimalRegistrationHistoryRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.8</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Получение всей истории изменения сведений
+                о регистрации животного или группы животных по глобальному идентификатору
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="animalRegistrationGuid" type="bs:UUID" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Глобальный идентификатор регистрационной карточки животного или группы животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="GetAnimalRegistrationHistoryResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.8</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Получение всей истории изменения сведений
+                о регистрации животного или группы животных по глобальному идентификатору
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="animalRegistrationList" type="vd:AnimalRegistrationList" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Список версий регистрационной карточки животного или группы животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="GetAnimalRegistrationChangesListRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.9</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Получение списка изменений по основным сведениям
+                о регистрации животного или группы животных за указанный период времени
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element ref="bs:listOptions" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Параметры запрашиваемого списка</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="bs:updateDateInterval" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Интервал времени обновления</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="region" type="dt:Region" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Зона обслуживания: субъект РФ, на территории которого содержатся животные
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="location" type="dt:Location" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Зона обслуживания: место содержания животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="operator" type="dt:SupervisedObject" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Поднадзорный объект, на котором осуществляется содержание животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="animalSpecies" type="dt:AnimalSpecies" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Биологический вид животного
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="GetAnimalRegistrationChangesListResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.9</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Получение списка изменений по основным сведениям
+                о регистрации животного или группы животных за указанный период времени
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="animalRegistrationList" type="vd:AnimalRegistrationList" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Список созданных за указанный период времени
+                                версий регистрационных карточек животных или групп животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="GetAnimalRegistrationByUuidRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.10</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Получение редакции (версии) основных сведений
+                о регистрации животного или группы животных по идентификатору конкретной версии
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="animalRegistrationUuid" type="bs:UUID" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Уникальный идентификатор версии регистрационной карточки животного или группы животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="GetAnimalRegistrationByUuidResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.10</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Получение редакции (версии) основных сведений
+                о регистрации животного или группы животных по идентификатору конкретной версии
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="animalRegistration" type="vd:AnimalRegistration" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Версия регистрационной карточки животного или группы животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="GetAnimalRegistrationListRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.11</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Получение списка основных актуальных сведений
+                о регистрации животного или группы животных с заданными параметрами фильтрации
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element ref="bs:listOptions" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Параметры запрашиваемого списка</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="vd:issueDateInterval" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Период дат оформления документов</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="region" type="dt:Region" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Зона обслуживания: субъект РФ, на территории которого содержатся животные
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="location" type="dt:Location" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Зона обслуживания: место содержания животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="operator" type="dt:SupervisedObject" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Поднадзорный объект, на котором осуществляется содержание животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="animalSpecies" type="dt:AnimalSpecies" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Биологический вид животного
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="GetAnimalRegistrationListResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.11</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Получение списка основных актуальных сведений
+                о регистрации животного или группы животных с заданными параметрами фильтрации
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="animalRegistrationList" type="vd:AnimalRegistrationList" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Список регистрационных карточек животных или групп животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="GetFullAnimalRegistrationByUuidRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.12</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Получение редакции (версии) полных сведений (включая ветпрофмероприятия)
+                о регистрации животного или группы животных по идентификатору конкретной версии
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="animalRegistrationUuid" type="bs:UUID" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Уникальный идентификатор версии регистрационной карточки животного или группы животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="GetFullAnimalRegistrationByUuidResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.12</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Получение редакции (версии) полных сведений (включая ветпрофмероприятия)
+                о регистрации животного или группы животных по идентификатору конкретной версии
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="animalRegistration" type="vd:AnimalRegistration" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Версия регистрационной карточки животного или группы животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="IncludeToAnimalGroupRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.13</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Пополнение группы животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="specifiedAnimalGroup" type="dt:AnimalGroup" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Сведения о пополнении группы животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="includedAnimalRegistrationList" type="vd:AnimalRegistrationList" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Список учётных карточек животных индивидуальной идентификации, которые необходимо включить в группу
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="animalRegistrationRef" type="vd:AnimalRegistration" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Учётная карточка группы животных, для которой выполняется пополнение
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="IncludeToAnimalGroupResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.13</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Пополнение группы животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="animalRegistration" type="vd:AnimalRegistration" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Зарегистрированная учётная карточка группы животного
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ExcludeFromAnimalGroupRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.14</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Исключение животных из группы
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="specifiedAnimalGroup" type="dt:AnimalGroup" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Сведения об исключении животных из группы
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="excludedAnimalRegistrationList" type="vd:AnimalRegistrationList" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Список учётных карточек животных индивидуальной идентификации, которые необходимо исключить из группы
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="animalRegistrationRef" type="vd:AnimalRegistration" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Учётная карточка группы животных, для которой выполняется исключение
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ExcludeFromAnimalGroupResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.1.14</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Исключение животных из группы
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="animalRegistration" type="vd:AnimalRegistration" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Зарегистрированная учётная карточка группы животного
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- ==========================================================================================-->
+    <!-- AMS.HRT.2 | Операции по работе со сведениями об идентификации животного (группы животных) -->
+    <!-- ==========================================================================================-->
+
+    <xs:complexType name="RegisterAnimalIdentityRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.2.1</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Регистрация сведений об идентификации (маркирование)
+                зарегистрированного животного или группы животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="animalMarkingEvent" type="vd:AnimalMarkingEvent" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Проект сведений об идентификации,
+                                содержащий глобальный идентификатор зарегистрированного животного или группы животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="RegisterAnimalIdentityResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.2.1</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Регистрация сведений об идентификации (маркирование)
+                зарегистрированного животного или группы животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="animalRegistrationList" type="vd:AnimalRegistrationList" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Список регистрационных карточек животных или групп животных
+                                с обновленными сведениями об идентификации (маркировании)
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="RemoveAnimalIdentityRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.2.2</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Прекращение регистрации сведений об идентификации (снятие средства маркирования)
+                зарегистрированного животного или группы животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="referencedMarkingEvent" type="vd:AnimalMarkingEvent" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Сведения о выбытии зарегистрированного средства идентификации (маркирования)
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="animalRegistrationRef" type="vd:AnimalRegistration" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Регистрационная карточка животных или групп животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="RemoveAnimalIdentityResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.2.2</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Прекращение регистрации сведений об идентификации (снятие средства маркирования)
+                зарегистрированного животного или группы животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="animalRegistrationList" type="vd:AnimalRegistrationList" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Список регистрационных карточек животных или групп животных
+                                с обновленными сведениями об идентификации (маркировании)
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ReplaceAnimalIdentityRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.2.3</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Перерегистрация сведений об идентификации (замена средства маркирования)
+                зарегистрированного животного или группы животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="referencedMarkingEvent" type="vd:AnimalMarkingEvent" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Сведения о новом средстве идентификации (маркирования) животного
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="animalRegistrationRef" type="vd:AnimalRegistration" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Регистрационная карточка животных или групп животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ReplaceAnimalIdentityResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.2.3</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Перерегистрация сведений об идентификации (замена средства маркирования)
+                зарегистрированного животного или группы животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="animalRegistrationList" type="vd:AnimalRegistrationList" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Список регистрационных карточек животных или групп животных
+                                с обновленными сведениями об идентификации (маркировании)
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ReplaceAnimalIdentityNotificationRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.2.4</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Заявка о необходимости перерегистрации сведений об идентификации (замене средства маркирования)
+                зарегистрированного животного или группы животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="referencedMarkingEvent" type="vd:AnimalMarkingEvent" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Сведения о причинах замены средства идентификации (маркирования)
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="animalRegistrationRef" type="vd:AnimalRegistration" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Регистрационная карточка животных или групп животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ReplaceAnimalIdentityNotificationResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.2.4</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Заявка о необходимости перерегистрации сведений об идентификации (замене средства маркирования)
+                зарегистрированного животного или группы животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="animalRegistrationList" type="vd:AnimalRegistrationList" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Список регистрационных карточек животных или групп животных
+                                с обновленными сведениями об идентификации (маркировании)
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="WithdrawAnimalIdentityRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.2.5</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Аннулирование сведений об идентификации (удаление средства маркирования)
+                зарегистрированного животного или группы животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="withdrawDetails" type="vd:AnimalIdentityStatusChange" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Сведения об аннулировании
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="animalRegistrationRef" type="vd:AnimalRegistration" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Регистрационная карточка животных или групп животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="WithdrawAnimalIdentityResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.2.5</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Аннулирование сведений об идентификации (удаление средства маркирования)
+                зарегистрированного животного или группы животных
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="animalRegistrationList" type="vd:AnimalRegistrationList" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Список регистрационных карточек животных или групп животных
+                                с обновленными сведениями об идентификации (маркировании)
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="VerifyAnimalIDRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.2.6</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Проверка статусов УНСМ (уникальных номеров средств маркирования)
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="animalIDList" type="dt:UnifiedAnimalIDList" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Список номеров средств маркирования для проверки
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="VerifyAnimalIDResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.2.6</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Проверка статусов УНСМ (уникальных номеров средств маркирования)
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="animalIDList" type="dt:UnifiedAnimalIDList" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Результат проверки указанных в запросе номеров средств маркирования
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- ===========================================================================================================-->
+    <!-- AMS.HRT.3 | Операции по работе с ветеринарными профилактическими мероприятиями животного (группы животных) -->
+    <!-- ===========================================================================================================-->
+
+    <xs:complexType name="RegisterAnimalVeterinaryEventRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.3.1</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Регистрация ветеринарного профилактического мероприятия
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="referencedMedicationEvent" type="vd:AnimalMedicationEvent" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Проект сведений о ветеринарном профилактическом мероприятии
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="specifiedAnimalGroup" type="vd:ObservableAnimalGroup" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Список зарегистрированных животных или групп животных,
+                                в отношении которых осуществлялось данное мероприятие
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="RegisterAnimalVeterinaryEventResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.3.1</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Регистрация ветеринарного профилактического мероприятия
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="medicationEvent" type="vd:AnimalMedicationEvent" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Зарегистрированные сведения о ветеринарном профилактическом мероприятии
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ModifyAnimalVeterinaryEventRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.3.2</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Редактирование сведений о ветеринарном профилактическом мероприятии
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="medicationEvent" type="vd:AnimalMedicationEvent" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Проект обновленных сведений о зарегистрированном ветеринарном
+                                профилактическом мероприятии с указанным глобальным идентификатором
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ModifyAnimalVeterinaryEventResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.3.2</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Редактирование сведений о ветеринарном профилактическом мероприятии
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="medicationEvent" type="vd:AnimalMedicationEvent" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Обновленная редакция сведений о зарегистрированном ветеринарном
+                                профилактическом мероприятии
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ConfirmAnimalVeterinaryEventRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.3.3</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Подтверждение сведений о ветеринарном профилактическом мероприятии
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="medicationEvent" type="vd:AnimalMedicationEvent" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Глобальный идентификатор зарегистрированных сведений о ветеринарном
+                                профилактическом мероприятии
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ConfirmAnimalVeterinaryEventResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.3.3</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Подтверждение сведений о ветеринарном профилактическом мероприятии
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="medicationEvent" type="vd:AnimalMedicationEvent" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Обновленная редакция сведений о зарегистрированном ветеринарном
+                                профилактическом мероприятии
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="WithdrawAnimalVeterinaryEventRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.3.4</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Аннулирование сведений о ветеринарном профилактическом мероприятии
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="reason" type="vd:VeterinaryEventStatusChangeReason" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Сведения об аннулировании
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="medicationEventRef" type="vd:AnimalMedicationEvent" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Глобальный идентификатор аннулируемых сведений о ветеринарном
+                                профилактическом мероприятии
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="WithdrawAnimalVeterinaryEventResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.3.4</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Аннулирование сведений о ветеринарном профилактическом мероприятии
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="medicationEvent" type="vd:AnimalMedicationEvent" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Обновленная редакция сведений о зарегистрированном ветеринарном
+                                профилактическом мероприятии в статусе WITHDRAWN
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="GetAnimalVeterinaryEventByGuidRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.3.5</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Получение актуальных сведений
+                о зарегистрированном ветеринарном профилактическом мероприятии по глобальному идентификатору
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="medicationEventGuid" type="bs:UUID" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Глобальный идентификатор зарегистрированных сведений о ветеринарном
+                                профилактическом мероприятии
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="GetAnimalVeterinaryEventByGuidResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.3.5</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Получение актуальных сведений
+                о зарегистрированном ветеринарном профилактическом мероприятии по глобальному идентификатору
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="medicationEvent" type="vd:AnimalMedicationEvent" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Актуальная редакция зарегистрированных сведений о ветеринарном
+                                профилактическом мероприятии
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="GetAnimalVeterinaryEventChangesListRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.3.6</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Получение списка изменений сведений
+                о зарегистрированных ветеринарных профилактических мероприятий за указанный период времени
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element ref="bs:listOptions" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Параметры запрашиваемого списка</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="bs:updateDateInterval" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Интервал времени обновления</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="region" type="dt:Region" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Зона обслуживания: субъект РФ, на территории которого содержатся животные
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="location" type="dt:Location" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Зона обслуживания: место содержания животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="operator" type="dt:SupervisedObject" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Поднадзорный объект, на котором осуществляется содержание животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="animalRegistrationGuid" type="bs:UUID" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Глобальный идентификатор учетной карточки животного или группы животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="GetAnimalVeterinaryEventChangesListResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.3.6</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Получение списка изменений сведений
+                о зарегистрированных ветеринарных профилактических мероприятий за указанный период времени
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="medicationEventList" type="vd:AnimalMedicationEventList" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Список созданных за указанный период времени версий сведений о
+                                ветеринарных профилактических мероприятиях животных или групп животных
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="GetAnimalVeterinaryEventHistoryRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.3.7</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Получение всей истории изменений сведений
+                о зарегистрированном ветеринарном профилактическом мероприятии по глобальному идентификатору
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="medicationEventGuid" type="bs:UUID" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Глобальный идентификатор зарегистрированных сведений о ветеринарном
+                                профилактическом мероприятии
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="GetAnimalVeterinaryEventHistoryResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.3.7</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Получение всей истории изменений сведений
+                о зарегистрированном ветеринарном профилактическом мероприятии по глобальному идентификатору
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="medicationEventList" type="vd:AnimalMedicationEventList" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Список версий сведений о ветеринарном профилактическом мероприятии
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="GetAnimalVeterinaryEventByUuidRequest">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.3.8</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Запрос: Получение редакции (версии) сведений
+                о зарегистрированном ветеринарном профилактическом мероприятии по идентификатору версии
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="hrt:HerriotApplicationRequest">
+                <xs:sequence>
+                    <xs:element name="medicationEventUuid" type="bs:UUID" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Уникальный идентификатор версии сведений о ветеринарном
+                                профилактическом мероприятии
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="GetAnimalVeterinaryEventByUuidResponse">
+        <xs:annotation>
+            <xs:appinfo>
+                <hrt:operationID>AMS.HRT.3.8</hrt:operationID>
+            </xs:appinfo>
+            <xs:documentation>
+                Ответ: Получение редакции (версии) сведений
+                о зарегистрированном ветеринарном профилактическом мероприятии по идентификатору версии
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="apl:ApplicationResultData">
+                <xs:sequence>
+                    <xs:element name="medicationEvent" type="vd:AnimalMedicationEvent" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>
+                                Сведения о версии сведений о ветеринарном профилактическом мероприятии
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##targetNamespace"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,920 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="DictionaryService"
+                  targetNamespace="http://api.vetrf.ru/schema/cdm/registry/dictionary/service/v3"
+                  xmlns:tns="http://api.vetrf.ru/schema/cdm/registry/dictionary/service/v3"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:bdef="http://api.vetrf.ru/schema/cdm/base/ws-definitions"
+                  xmlns:rdef="http://api.vetrf.ru/schema/cdm/registry/ws-definitions/v2">
+
+    <wsdl:documentation>
+        Service: DictionaryService
+        Version: 3.0
+    </wsdl:documentation>
+
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://api.vetrf.ru/schema/cdm/base/ws-definitions"
+                    schemaLocation="base_ws_definitions_v2.1.xsd"/>
+            <import namespace="http://api.vetrf.ru/schema/cdm/registry/ws-definitions/v2"
+                    schemaLocation="registry_ws_definitions_v2.5.xsd"/>
+        </schema>
+    </wsdl:types>
+
+    <!--
+   *****************************************
+   * Получение справочника единиц измерения
+   *****************************************
+   -->
+    <wsdl:message name="GetUnitByGuid">
+        <wsdl:part name="request" element="rdef:getUnitByGuidRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetUnitByGuidResponse">
+        <wsdl:part name="response" element="rdef:getUnitByGuidResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetUnitByUuid">
+        <wsdl:part name="request" element="rdef:getUnitByUuidRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetUnitByUuidResponse">
+        <wsdl:part name="response" element="rdef:getUnitByUuidResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetUnitList">
+        <wsdl:part name="request" element="rdef:getUnitListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetUnitListResponse">
+        <wsdl:part name="response" element="rdef:getUnitListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetUnitChangesList">
+        <wsdl:part name="request" element="rdef:getUnitChangesListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetUnitChangesListResponse">
+        <wsdl:part name="response" element="rdef:getUnitChangesListResponse"/>
+    </wsdl:message>
+
+    <!--
+    *****************************************
+    * Получение справочника биологических видов животных
+    *****************************************
+    -->
+    <wsdl:message name="GetAnimalSpeciesByGuid">
+        <wsdl:part name="request" element="rdef:getAnimalSpeciesByGuidRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalSpeciesByGuidResponse">
+        <wsdl:part name="response" element="rdef:getAnimalSpeciesByGuidResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalSpeciesByUuid">
+        <wsdl:part name="request" element="rdef:getAnimalSpeciesByUuidRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalSpeciesByUuidResponse">
+        <wsdl:part name="response" element="rdef:getAnimalSpeciesByUuidResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalSpeciesList">
+        <wsdl:part name="request" element="rdef:getAnimalSpeciesListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalSpeciesListResponse">
+        <wsdl:part name="response" element="rdef:getAnimalSpeciesListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalSpeciesChangesList">
+        <wsdl:part name="request" element="rdef:getAnimalSpeciesChangesListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalSpeciesChangesListResponse">
+        <wsdl:part name="response" element="rdef:getAnimalSpeciesChangesListResponse"/>
+    </wsdl:message>
+
+    <!--
+    *****************************************
+    * Получение справочника пород животных
+    *****************************************
+    -->
+    <wsdl:message name="GetAnimalBreedByGuid">
+        <wsdl:part name="request" element="rdef:getAnimalBreedByGuidRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalBreedByGuidResponse">
+        <wsdl:part name="response" element="rdef:getAnimalBreedByGuidResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalBreedByUuid">
+        <wsdl:part name="request" element="rdef:getAnimalBreedByUuidRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalBreedByUuidResponse">
+        <wsdl:part name="response" element="rdef:getAnimalBreedByUuidResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalBreedList">
+        <wsdl:part name="request" element="rdef:getAnimalBreedListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalBreedListResponse">
+        <wsdl:part name="response" element="rdef:getAnimalBreedListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalBreedChangesList">
+        <wsdl:part name="request" element="rdef:getAnimalBreedChangesListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalBreedChangesListResponse">
+        <wsdl:part name="response" element="rdef:getAnimalBreedChangesListResponse"/>
+    </wsdl:message>
+
+    <!--
+    *****************************************
+    * Получение справочника типов содержания животных
+    *****************************************
+    -->
+    <wsdl:message name="GetAnimalKeepingTypeByGuid">
+        <wsdl:part name="request" element="rdef:getAnimalKeepingTypeByGuidRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalKeepingTypeByGuidResponse">
+        <wsdl:part name="response" element="rdef:getAnimalKeepingTypeByGuidResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalKeepingTypeByUuid">
+        <wsdl:part name="request" element="rdef:getAnimalKeepingTypeByUuidRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalKeepingTypeByUuidResponse">
+        <wsdl:part name="response" element="rdef:getAnimalKeepingTypeByUuidResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalKeepingTypeList">
+        <wsdl:part name="request" element="rdef:getAnimalKeepingTypeListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalKeepingTypeListResponse">
+        <wsdl:part name="response" element="rdef:getAnimalKeepingTypeListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalKeepingTypeChangesList">
+        <wsdl:part name="request" element="rdef:getAnimalKeepingTypeChangesListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalKeepingTypeChangesListResponse">
+        <wsdl:part name="response" element="rdef:getAnimalKeepingTypeChangesListResponse"/>
+    </wsdl:message>
+
+    <!--
+    *****************************************
+    * Получение справочника целей содержания животных
+    *****************************************
+    -->
+    <wsdl:message name="GetAnimalKeepingPurposeByGuid">
+        <wsdl:part name="request" element="rdef:getAnimalKeepingPurposeByGuidRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalKeepingPurposeByGuidResponse">
+        <wsdl:part name="response" element="rdef:getAnimalKeepingPurposeByGuidResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalKeepingPurposeByUuid">
+        <wsdl:part name="request" element="rdef:getAnimalKeepingPurposeByUuidRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalKeepingPurposeByUuidResponse">
+        <wsdl:part name="response" element="rdef:getAnimalKeepingPurposeByUuidResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalKeepingPurposeList">
+        <wsdl:part name="request" element="rdef:getAnimalKeepingPurposeListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalKeepingPurposeListResponse">
+        <wsdl:part name="response" element="rdef:getAnimalKeepingPurposeListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalKeepingPurposeChangesList">
+        <wsdl:part name="request" element="rdef:getAnimalKeepingPurposeChangesListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalKeepingPurposeChangesListResponse">
+        <wsdl:part name="response" element="rdef:getAnimalKeepingPurposeChangesListResponse"/>
+    </wsdl:message>
+
+    <!--
+    *****************************************
+    * Получение справочника мест нанесения средств маркирования животных
+    *****************************************
+    -->
+    <wsdl:message name="GetAnimalMarkingLocationByGuid">
+        <wsdl:part name="request" element="rdef:getAnimalMarkingLocationByGuidRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalMarkingLocationByGuidResponse">
+        <wsdl:part name="response" element="rdef:getAnimalMarkingLocationByGuidResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalMarkingLocationByUuid">
+        <wsdl:part name="request" element="rdef:getAnimalMarkingLocationByUuidRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalMarkingLocationByUuidResponse">
+        <wsdl:part name="response" element="rdef:getAnimalMarkingLocationByUuidResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalMarkingLocationList">
+        <wsdl:part name="request" element="rdef:getAnimalMarkingLocationListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalMarkingLocationListResponse">
+        <wsdl:part name="response" element="rdef:getAnimalMarkingLocationListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalMarkingLocationChangesList">
+        <wsdl:part name="request" element="rdef:getAnimalMarkingLocationChangesListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetAnimalMarkingLocationChangesListResponse">
+        <wsdl:part name="response" element="rdef:getAnimalMarkingLocationChangesListResponse"/>
+    </wsdl:message>
+    
+    <!--
+    **************************************
+    * Сообщение об ошибках
+    **************************************
+    -->
+    <wsdl:message name="EntityNotFoundFault">
+        <wsdl:documentation>
+            Запись с указанным идентификатором не найдена.
+        </wsdl:documentation>
+        <wsdl:part name="fault" element="bdef:entityNotFoundFault"/>
+    </wsdl:message>
+    <wsdl:message name="IncorrectRequestFault">
+        <wsdl:documentation>
+            Реакция системы на некорректный запрос.
+        </wsdl:documentation>
+        <wsdl:part name="fault" element="bdef:incorrectRequestFault"/>
+    </wsdl:message>
+    <wsdl:message name="InternalServiceFault">
+        <wsdl:documentation>
+            Внутренняя ошибка выполнения операции на сервере.
+        </wsdl:documentation>
+        <wsdl:part name="fault" element="bdef:internalServiceFault"/>
+    </wsdl:message>
+    <wsdl:message name="OffsetOutOfRangeFault">
+        <wsdl:documentation>
+
+        </wsdl:documentation>
+        <wsdl:part name="fault" element="bdef:offsetOutOfRangeFault"/>
+    </wsdl:message>
+
+    <wsdl:portType name="DictionaryServicePortType">
+
+        <!--
+        *****************************************
+        * Получение справочника единиц измерения
+        *****************************************
+        -->
+        <wsdl:operation name="GetUnitByGuid">
+            <wsdl:input name="unitByGuid" message="tns:GetUnitByGuid"/>
+            <wsdl:output name="unitByGuidResponse" message="tns:GetUnitByGuidResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="entityNotFoundFault" message="tns:EntityNotFoundFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetUnitByUuid">
+            <wsdl:input name="unitByUuid" message="tns:GetUnitByUuid"/>
+            <wsdl:output name="unitByUuidResponse" message="tns:GetUnitByUuidResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="entityNotFoundFault" message="tns:EntityNotFoundFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetUnitList">
+            <wsdl:input name="unitList" message="tns:GetUnitList"/>
+            <wsdl:output name="unitListResponse" message="tns:GetUnitListResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="offsetOutOfRangeFault" message="tns:OffsetOutOfRangeFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetUnitChangesList">
+            <wsdl:input name="unitChangesList" message="tns:GetUnitChangesList"/>
+            <wsdl:output name="unitChangesListResponse" message="tns:GetUnitChangesListResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="offsetOutOfRangeFault" message="tns:OffsetOutOfRangeFault"/>
+        </wsdl:operation>
+
+        <!--
+        *****************************************
+        * Получение справочника биологических видов животных
+        *****************************************
+        -->
+        <wsdl:operation name="GetAnimalSpeciesByGuid">
+            <wsdl:input name="animalSpeciesByGuid" message="tns:GetAnimalSpeciesByGuid"/>
+            <wsdl:output name="animalSpeciesByGuidResponse" message="tns:GetAnimalSpeciesByGuidResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="entityNotFoundFault" message="tns:EntityNotFoundFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalSpeciesByUuid">
+            <wsdl:input name="animalSpeciesByUuid" message="tns:GetAnimalSpeciesByUuid"/>
+            <wsdl:output name="animalSpeciesByUuidResponse" message="tns:GetAnimalSpeciesByUuidResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="entityNotFoundFault" message="tns:EntityNotFoundFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalSpeciesList">
+            <wsdl:input name="animalSpeciesList" message="tns:GetAnimalSpeciesList"/>
+            <wsdl:output name="animalSpeciesListResponse" message="tns:GetAnimalSpeciesListResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="offsetOutOfRangeFault" message="tns:OffsetOutOfRangeFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalSpeciesChangesList">
+            <wsdl:input name="animalSpeciesChangesList" message="tns:GetAnimalSpeciesChangesList"/>
+            <wsdl:output name="animalSpeciesChangesListResponse" message="tns:GetAnimalSpeciesChangesListResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="offsetOutOfRangeFault" message="tns:OffsetOutOfRangeFault"/>
+        </wsdl:operation>
+
+        <!--
+        *****************************************
+        * Получение справочника пород животных
+        *****************************************
+        -->
+        <wsdl:operation name="GetAnimalBreedByGuid">
+            <wsdl:input name="animalBreedByGuid" message="tns:GetAnimalBreedByGuid"/>
+            <wsdl:output name="animalBreedByGuidResponse" message="tns:GetAnimalBreedByGuidResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="entityNotFoundFault" message="tns:EntityNotFoundFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalBreedByUuid">
+            <wsdl:input name="animalBreedByUuid" message="tns:GetAnimalBreedByUuid"/>
+            <wsdl:output name="animalBreedByUuidResponse" message="tns:GetAnimalBreedByUuidResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="entityNotFoundFault" message="tns:EntityNotFoundFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalBreedList">
+            <wsdl:input name="animalBreedList" message="tns:GetAnimalBreedList"/>
+            <wsdl:output name="animalBreedListResponse" message="tns:GetAnimalBreedListResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="offsetOutOfRangeFault" message="tns:OffsetOutOfRangeFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalBreedChangesList">
+            <wsdl:input name="animalBreedChangesList" message="tns:GetAnimalBreedChangesList"/>
+            <wsdl:output name="animalBreedChangesListResponse" message="tns:GetAnimalBreedChangesListResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="offsetOutOfRangeFault" message="tns:OffsetOutOfRangeFault"/>
+        </wsdl:operation>
+
+        <!--
+        *****************************************
+        * Получение справочника типов содержания животных
+        *****************************************
+        -->
+        <wsdl:operation name="GetAnimalKeepingTypeByGuid">
+            <wsdl:input name="animalKeepingTypeByGuid" message="tns:GetAnimalKeepingTypeByGuid"/>
+            <wsdl:output name="animalKeepingTypeByGuidResponse" message="tns:GetAnimalKeepingTypeByGuidResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="entityNotFoundFault" message="tns:EntityNotFoundFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalKeepingTypeByUuid">
+            <wsdl:input name="animalKeepingTypeByUuid" message="tns:GetAnimalKeepingTypeByUuid"/>
+            <wsdl:output name="animalKeepingTypeByUuidResponse" message="tns:GetAnimalKeepingTypeByUuidResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="entityNotFoundFault" message="tns:EntityNotFoundFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalKeepingTypeList">
+            <wsdl:input name="animalKeepingTypeList" message="tns:GetAnimalKeepingTypeList"/>
+            <wsdl:output name="animalKeepingTypeListResponse" message="tns:GetAnimalKeepingTypeListResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="offsetOutOfRangeFault" message="tns:OffsetOutOfRangeFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalKeepingTypeChangesList">
+            <wsdl:input name="animalKeepingTypeChangesList" message="tns:GetAnimalKeepingTypeChangesList"/>
+            <wsdl:output name="animalKeepingTypeChangesListResponse" message="tns:GetAnimalKeepingTypeChangesListResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="offsetOutOfRangeFault" message="tns:OffsetOutOfRangeFault"/>
+        </wsdl:operation>
+
+        <!--
+        *****************************************
+        * Получение справочника целей содержания животных
+        *****************************************
+        -->
+        <wsdl:operation name="GetAnimalKeepingPurposeByGuid">
+            <wsdl:input name="animalKeepingPurposeByGuid" message="tns:GetAnimalKeepingPurposeByGuid"/>
+            <wsdl:output name="animalKeepingPurposeByGuidResponse" message="tns:GetAnimalKeepingPurposeByGuidResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="entityNotFoundFault" message="tns:EntityNotFoundFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalKeepingPurposeByUuid">
+            <wsdl:input name="animalKeepingPurposeByUuid" message="tns:GetAnimalKeepingPurposeByUuid"/>
+            <wsdl:output name="animalKeepingPurposeByUuidResponse" message="tns:GetAnimalKeepingPurposeByUuidResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="entityNotFoundFault" message="tns:EntityNotFoundFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalKeepingPurposeList">
+            <wsdl:input name="animalKeepingPurposeList" message="tns:GetAnimalKeepingPurposeList"/>
+            <wsdl:output name="animalKeepingPurposeListResponse" message="tns:GetAnimalKeepingPurposeListResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="offsetOutOfRangeFault" message="tns:OffsetOutOfRangeFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalKeepingPurposeChangesList">
+            <wsdl:input name="animalKeepingPurposeChangesList" message="tns:GetAnimalKeepingPurposeChangesList"/>
+            <wsdl:output name="animalKeepingPurposeChangesListResponse" message="tns:GetAnimalKeepingPurposeChangesListResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="offsetOutOfRangeFault" message="tns:OffsetOutOfRangeFault"/>
+        </wsdl:operation>
+
+        <!--
+        *****************************************
+        * Получение справочника мест нанесения средств маркирования животных
+        *****************************************
+        -->
+        <wsdl:operation name="GetAnimalMarkingLocationByGuid">
+            <wsdl:input name="animalMarkingLocationByGuid" message="tns:GetAnimalMarkingLocationByGuid"/>
+            <wsdl:output name="animalMarkingLocationByGuidResponse" message="tns:GetAnimalMarkingLocationByGuidResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="entityNotFoundFault" message="tns:EntityNotFoundFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalMarkingLocationByUuid">
+            <wsdl:input name="animalMarkingLocationByUuid" message="tns:GetAnimalMarkingLocationByUuid"/>
+            <wsdl:output name="animalMarkingLocationByUuidResponse" message="tns:GetAnimalMarkingLocationByUuidResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="entityNotFoundFault" message="tns:EntityNotFoundFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalMarkingLocationList">
+            <wsdl:input name="animalMarkingLocationList" message="tns:GetAnimalMarkingLocationList"/>
+            <wsdl:output name="animalMarkingLocationListResponse" message="tns:GetAnimalMarkingLocationListResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="offsetOutOfRangeFault" message="tns:OffsetOutOfRangeFault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalMarkingLocationChangesList">
+            <wsdl:input name="animalMarkingLocationChangesList" message="tns:GetAnimalMarkingLocationChangesList"/>
+            <wsdl:output name="animalMarkingLocationChangesListResponse" message="tns:GetAnimalMarkingLocationChangesListResponse"/>
+            <wsdl:fault name="internalServiceFault" message="tns:InternalServiceFault"/>
+            <wsdl:fault name="incorrectRequestFault" message="tns:IncorrectRequestFault"/>
+            <wsdl:fault name="offsetOutOfRangeFault" message="tns:OffsetOutOfRangeFault"/>
+        </wsdl:operation>
+
+    </wsdl:portType>
+
+    <wsdl:binding name="DictionaryServiceBinding" type="tns:DictionaryServicePortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <!--
+        *****************************************
+        * Получение справочника единиц измерения
+        *****************************************
+        -->
+        <wsdl:operation name="GetUnitByGuid">
+            <soap:operation soapAction="GetUnitByGuid"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="entityNotFoundFault">
+                <soap:fault name="entityNotFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetUnitByUuid">
+            <soap:operation soapAction="GetUnitByUuid"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="entityNotFoundFault">
+                <soap:fault name="entityNotFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetUnitList">
+            <soap:operation soapAction="GetUnitList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="offsetOutOfRangeFault">
+                <soap:fault name="offsetOutOfRangeFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetUnitChangesList">
+            <soap:operation soapAction="GetUnitChangesList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="offsetOutOfRangeFault">
+                <soap:fault name="offsetOutOfRangeFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <!--
+        *****************************************
+        * Получение справочника биологических видов животных
+        *****************************************
+        -->
+        <wsdl:operation name="GetAnimalSpeciesByGuid">
+            <soap:operation soapAction="GetAnimalSpeciesByGuid"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="entityNotFoundFault">
+                <soap:fault name="entityNotFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalSpeciesByUuid">
+            <soap:operation soapAction="GetAnimalSpeciesByUuid"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="entityNotFoundFault">
+                <soap:fault name="entityNotFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalSpeciesList">
+            <soap:operation soapAction="GetAnimalSpeciesList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="offsetOutOfRangeFault">
+                <soap:fault name="offsetOutOfRangeFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalSpeciesChangesList">
+            <soap:operation soapAction="GetAnimalSpeciesChangesList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="offsetOutOfRangeFault">
+                <soap:fault name="offsetOutOfRangeFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <!--
+        *****************************************
+        * Получение справочника пород животных
+        *****************************************
+        -->
+        <wsdl:operation name="GetAnimalBreedByGuid">
+            <soap:operation soapAction="GetAnimalBreedByGuid"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="entityNotFoundFault">
+                <soap:fault name="entityNotFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalBreedByUuid">
+            <soap:operation soapAction="GetAnimalBreedByUuid"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="entityNotFoundFault">
+                <soap:fault name="entityNotFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalBreedList">
+            <soap:operation soapAction="GetAnimalBreedList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="offsetOutOfRangeFault">
+                <soap:fault name="offsetOutOfRangeFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalBreedChangesList">
+            <soap:operation soapAction="GetAnimalBreedChangesList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="offsetOutOfRangeFault">
+                <soap:fault name="offsetOutOfRangeFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <!--
+        *****************************************
+        * Получение справочника типов содержания животных
+        *****************************************
+        -->
+        <wsdl:operation name="GetAnimalKeepingTypeByGuid">
+            <soap:operation soapAction="GetAnimalKeepingTypeByGuid"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="entityNotFoundFault">
+                <soap:fault name="entityNotFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalKeepingTypeByUuid">
+            <soap:operation soapAction="GetAnimalKeepingTypeByUuid"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="entityNotFoundFault">
+                <soap:fault name="entityNotFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalKeepingTypeList">
+            <soap:operation soapAction="GetAnimalKeepingTypeList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="offsetOutOfRangeFault">
+                <soap:fault name="offsetOutOfRangeFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalKeepingTypeChangesList">
+            <soap:operation soapAction="GetAnimalKeepingTypeChangesList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="offsetOutOfRangeFault">
+                <soap:fault name="offsetOutOfRangeFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <!--
+        *****************************************
+        * Получение справочника целей содержания животных
+        *****************************************
+        -->
+        <wsdl:operation name="GetAnimalKeepingPurposeByGuid">
+            <soap:operation soapAction="GetAnimalKeepingPurposeByGuid"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="entityNotFoundFault">
+                <soap:fault name="entityNotFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalKeepingPurposeByUuid">
+            <soap:operation soapAction="GetAnimalKeepingPurposeByUuid"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="entityNotFoundFault">
+                <soap:fault name="entityNotFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalKeepingPurposeList">
+            <soap:operation soapAction="GetAnimalKeepingPurposeList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="offsetOutOfRangeFault">
+                <soap:fault name="offsetOutOfRangeFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalKeepingPurposeChangesList">
+            <soap:operation soapAction="GetAnimalKeepingPurposeChangesList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="offsetOutOfRangeFault">
+                <soap:fault name="offsetOutOfRangeFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+        <!--
+        *****************************************
+        * Получение справочника мест нанесения средств маркирования животных
+        *****************************************
+        -->
+        <wsdl:operation name="GetAnimalMarkingLocationByGuid">
+            <soap:operation soapAction="GetAnimalMarkingLocationByGuid"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="entityNotFoundFault">
+                <soap:fault name="entityNotFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalMarkingLocationByUuid">
+            <soap:operation soapAction="GetAnimalMarkingLocationByUuid"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="entityNotFoundFault">
+                <soap:fault name="entityNotFoundFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalMarkingLocationList">
+            <soap:operation soapAction="GetAnimalMarkingLocationList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="offsetOutOfRangeFault">
+                <soap:fault name="offsetOutOfRangeFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAnimalMarkingLocationChangesList">
+            <soap:operation soapAction="GetAnimalMarkingLocationChangesList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="internalServiceFault">
+                <soap:fault name="internalServiceFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="incorrectRequestFault">
+                <soap:fault name="incorrectRequestFault" use="literal"/>
+            </wsdl:fault>
+            <wsdl:fault name="offsetOutOfRangeFault">
+                <soap:fault name="offsetOutOfRangeFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+
+    </wsdl:binding>
+
+    <wsdl:service name="DictionaryServiceBindingQSService">
+        <wsdl:port binding="tns:DictionaryServiceBinding" name="DictionaryServiceBindingQSPort">
+            <soap:address location="https://{server}:{port}/platform/services/2.0/DictionaryService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

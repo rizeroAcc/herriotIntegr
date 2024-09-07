@@ -1,0 +1,7 @@
+dependencies:
+  - base-schemas:
+      version: v2.1-20231109
+  - aplm-schemas:
+      version: v2.1-20231109
+  - cdm-schemas:
+      version: v2.5-20240603

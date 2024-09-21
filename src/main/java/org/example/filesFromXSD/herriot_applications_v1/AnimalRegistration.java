@@ -490,6 +490,13 @@ public class AnimalRegistration
         return this.additionalAttribute;
     }
 
+    public void addAdditionalAttribute(UnmeasuredAttribute attribute){
+        if (additionalAttribute == null) {
+            additionalAttribute = new ArrayList<UnmeasuredAttribute>();
+        }
+        additionalAttribute.add(attribute);
+    }
+
     /**
      * Gets the value of the pedigreeInfo property.
      * 

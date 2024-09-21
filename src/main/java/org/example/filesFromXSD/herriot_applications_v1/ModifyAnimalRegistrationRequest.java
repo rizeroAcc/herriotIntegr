@@ -10,10 +10,8 @@ package org.example.filesFromXSD.herriot_applications_v1;
 
 import java.util.ArrayList;
 import java.util.List;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlType;
+
+import jakarta.xml.bind.annotation.*;
 
 /**
  * 
@@ -38,6 +36,7 @@ import jakarta.xml.bind.annotation.XmlType;
  * 
  * 
  */
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ModifyAnimalRegistrationRequest", propOrder = {
     "animalRegistration"
@@ -76,6 +75,13 @@ public class ModifyAnimalRegistrationRequest
             animalRegistration = new ArrayList<AnimalRegistration>();
         }
         return this.animalRegistration;
+    }
+
+    public void addAnimalRegistration(AnimalRegistration registration){
+        if (animalRegistration == null) {
+            animalRegistration = new ArrayList<AnimalRegistration>();
+        }
+        animalRegistration.add(registration);
     }
 
 }

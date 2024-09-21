@@ -356,7 +356,12 @@ public class Animal {
         }
         return this.specifiedAnimalLabel;
     }
-
+    public void addSpecifiedAnimalLabel(AnimalLabel label){
+        if (specifiedAnimalLabel == null) {
+            specifiedAnimalLabel = new ArrayList<AnimalLabel>();
+        }
+        specifiedAnimalLabel.add(label);
+    }
     /**
      * Gets the value of the classification property.
      * 
@@ -384,6 +389,12 @@ public class Animal {
             classification = new ArrayList<ClassificationAttribute>();
         }
         return this.classification;
+    }
+    public void addClassification(ClassificationAttribute classificator){
+        if (classification == null) {
+            classification = new ArrayList<ClassificationAttribute>();
+        }
+        classification.add(classificator);
     }
 
     /**
@@ -413,6 +424,12 @@ public class Animal {
             attribute = new ArrayList<MeasuredAttribute>();
         }
         return this.attribute;
+    }
+    public void addAttribute(MeasuredAttribute attr){
+        if (attribute == null) {
+            attribute = new ArrayList<MeasuredAttribute>();
+        }
+        attribute.add(attr);
     }
 
     /**

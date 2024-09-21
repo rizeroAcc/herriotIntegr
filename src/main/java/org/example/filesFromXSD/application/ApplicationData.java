@@ -13,6 +13,7 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlSeeAlso;
 import jakarta.xml.bind.annotation.XmlType;
 import org.example.filesFromXSD.herriot_applications_v1.HerriotApplicationRequest;
+import org.example.filesFromXSD.herriot_applications_v1.ModifyAnimalRegistrationRequest;
 
 
 /**
@@ -34,7 +35,8 @@ import org.example.filesFromXSD.herriot_applications_v1.HerriotApplicationReques
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ApplicationData")
 @XmlSeeAlso({
-    HerriotApplicationRequest.class
+        HerriotApplicationRequest.class,
+        ModifyAnimalRegistrationRequest.class
 })
 public abstract class ApplicationData {
 

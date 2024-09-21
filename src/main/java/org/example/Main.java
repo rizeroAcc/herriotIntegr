@@ -16,6 +16,7 @@ import org.example.filesFromXSD.base.ComplexDatePeriod;
 import org.example.filesFromXSD.codelist.*;
 import org.example.filesFromXSD.dictionary_v2.*;
 import org.example.filesFromXSD.herriot_applications_v1.AnimalRegistration;
+import org.example.filesFromXSD.herriot_applications_v1.ModifyAnimalRegistrationRequest;
 import org.example.filesFromXSD.herriot_applications_v1.RegisterAnimalRequest;
 import org.example.filesFromXSD.mercury_vet_document.*;
 import org.example.filesFromXSD.registry.GetBusinessEntityListRequest;
@@ -41,34 +42,6 @@ import java.util.Scanner;
 
 
 public class Main {
-    public static AnimalSpecies createAnimalSpecies(String guid){
-        AnimalSpecies species = new AnimalSpecies();
-        species.setGuid(guid);
-        return species;
-    }
-    public static AnimalBreed createAnimalBreed(String guid){
-        AnimalBreed breed = new AnimalBreed();
-        breed.setGuid(guid);
-        return breed;
-    }
-    public static AnimalColour createAnimalColor(String color){
-        AnimalColour colour = new AnimalColour();
-        colour.setName("string");
-        return colour;
-    }
-    public static AnimalGender createGender(AnimalGenderContentType type){
-        AnimalGender gender = new AnimalGender();
-        gender.setValue(type);
-        return gender;
-    }
-    public static Measure createWeight(int value,String guid){
-        Measure weight = new Measure();
-        weight.setValue(BigDecimal.valueOf(value));
-        Unit unit =  new Unit();
-        unit.setGuid(guid);
-        weight.setUnit(unit);
-        return weight;
-    }
     public static ComplexDate createComplexDate(int day,int month,int year){
         ComplexDate date = new ComplexDate();
         date.setYear(year);
@@ -88,23 +61,22 @@ public class Main {
                                                String color,
                                                AnimalGenderContentType gender,
                                                String name,
-                                               int weightValue,
+                                               double weightValue,
                                                String unitGUID,
                                                int year,
                                                int month,
                                                int day,
                                                String birthLocationGUID){
-        Animal animal = new Animal();
-
-        animal.setSpecies(createAnimalSpecies(speciesGUID));
-        animal.setBreed(createAnimalBreed(breedGUID));
-        animal.setColour(createAnimalColor(color));
-        animal.setGender(createGender(gender));
-        animal.setName(name);
-        animal.setWeight(createWeight(weightValue,unitGUID));
-        animal.setBirthDate(createComplexDate(day,month,year));
-        animal.setBirthLocation(createBirthLocation(birthLocationGUID));
-        return animal;
+        AnimalBuilder animalBuilder = new AnimalBuilder();
+        animalBuilder.setAnimalSpecies(speciesGUID);
+        animalBuilder.setBreed(breedGUID);
+        animalBuilder.setColor(color);
+        animalBuilder.setGender(gender);
+        animalBuilder.setName(name);
+        animalBuilder.setWeight(unitGUID,weightValue);
+        animalBuilder.setBirthDate(year,month,day);
+        animalBuilder.setBirthLocation(birthLocationGUID);
+        return animalBuilder.getAnimal();
     }
     public static AnimalID createAnimalID(AnimalIDFormatContentType idType, String id){
         AnimalID animalID = new AnimalID();
@@ -220,59 +192,28 @@ public class Main {
         document.setRelationshipType(refType);
         return document;
     }
-    public static AnimalIdentityType createAnimalIdentityType(AnimalIdentityTypeContentType type){
-        AnimalIdentityType identityType = new AnimalIdentityType();
-        identityType.setValue(type);
-        return identityType;
-    }
-    public static AnimalRegistrationStatus createAnimalRegistrationStatus(AnimalRegistrationStatusContentType statusType){
-        AnimalRegistrationStatus registrationStatus = new AnimalRegistrationStatus();
-        registrationStatus.setValue(statusType);
-        return registrationStatus;
-    }
-    public static AnimalIdentificationEventType createIdentEventType(AnimalIdentificationEventTypeContentType type){
-        AnimalIdentificationEventType identificationEventType = new AnimalIdentificationEventType();
-        identificationEventType.setValue(type);
-        return identificationEventType;
-    }
-    public static AnimalRegistration createAnimalRegistration(){
-        AnimalRegistration animalRegistration = new AnimalRegistration();
-        animalRegistration.setIdentityType(createAnimalIdentityType(AnimalIdentityTypeContentType.INDIVIDUAL));
-        animalRegistration.setRegistrationStatus(createAnimalRegistrationStatus(AnimalRegistrationStatusContentType.ACTIVE));
-        animalRegistration.setInitialIdentificationType(createIdentEventType(AnimalIdentificationEventTypeContentType.OTHER));
-        animalRegistration.setSpecifiedAnimal(createSpecifiedAnimal(
-                "c3783d29-f78d-4481-8510-deab8cbc8d23",
-                "45056575-62bb-4569-ae73-7eebabc008ae",
-                "green",
-                AnimalGenderContentType.FEMALE,
-                "Name",
-                10,
-                "091ad7ad-7d01-4677-bc04-e23be78ae102",
-                2022,
-                8,8,
-                "e637ee59-66e2-4b31-b882-4e2515120ebe"
-        ));
 
-        animalRegistration.addSpecifiedAnimalIdentity(createAnimalIdentity(
-                createAnimalLabel(
-                        AnimalIDFormatContentType.UNMM,
-                        "RU131838311",
-                        AnimalLabelTypeContentType.MAIN,
-                        "141fdac3-e2a1-5c8c-21a3-0b50065e50a1",
-                        AnimalMarkingMeansTypeContentType.LABEL
-                ),
-                createAssociatedMarkingEvent(
-                        VeterinaryEventTypeContentType.AME,
-                        1,
-                        10,
-                        2023,
-                        "8531a1e1-8365-4611-8f9f-722402e4953d"
-                )
-        ));
-        animalRegistration.addSpecifiedAnimalIdentity(createAnimalIdentity(
+    public static AnimalRegistration createAnimalRegistration(){
+        AnimalRegistrationBuilder animalRegistrationBuilder = new AnimalRegistrationBuilder();
+
+        animalRegistrationBuilder.setIdentityType(AnimalIdentityTypeContentType.INDIVIDUAL);
+        animalRegistrationBuilder.setAnimalRegistrationStatus(AnimalRegistrationStatusContentType.ACTIVE);
+        animalRegistrationBuilder.setInitialIdentificationType(AnimalIdentificationEventTypeContentType.OTHER);
+
+        AnimalBuilder animalBuilder = new AnimalBuilder();
+        animalBuilder.setAnimalSpecies("c3783d29-f78d-4481-8510-deab8cbc8d23");
+        animalBuilder.setBreed("45056575-62bb-4569-ae73-7eebabc008ae");
+        animalBuilder.setColor("green");
+        animalBuilder.setGender(AnimalGenderContentType.FEMALE);
+        animalBuilder.setName("Korova");
+        animalBuilder.setBirthDate(2022,8,8);
+
+
+        animalRegistrationBuilder.setSpecifiedAnimal(animalBuilder.getAnimal());
+        animalRegistrationBuilder.addSpecifiedAnimalIdentity(createAnimalIdentity(
                 createAnimalLabel(
                         AnimalIDFormatContentType.OTHER,
-                        "2213211",
+                        "2213210",
                         AnimalLabelTypeContentType.ADDITIONAL,
                         "141fdac3-e2a1-5c8c-21a3-0b50065e50a1",
                         AnimalMarkingMeansTypeContentType.COLLAR
@@ -282,38 +223,85 @@ public class Main {
                         10,
                         11,
                         2023,
-                        "8531a1e1-8365-4611-8f9f-722402e4953d"
+                        "28312a61-ae25-4128-8fd1-beeebbe87bf9"
                 )
         ));
 
         AnimalGeneticPassport passport = new AnimalGeneticPassport();
         passport.setConclusion("string");
         passport.setData("string");
-        animalRegistration.setSpecifiedGeneticPassport(passport);
+        animalRegistrationBuilder.setSpecifiedGeneticPassport(passport);
 
-        animalRegistration.setKeepingDetails(createKeepingDetails(
-                "c6c79e9e-6018-4855-b623-97c3e2e81b72",
+        animalRegistrationBuilder.setKeepingDetails(createKeepingDetails(
+                "e42a49c5-3d27-4b11-a64a-e4ea89aac978",
                 "99e904cc-a48c-438f-86b4-3f5e28dbd07c",
                 "74dcb936-460d-4eee-b803-aa40e7a88033"
         ));
-        AnimalBreedingValueType breedingValueType = new AnimalBreedingValueType();
-        breedingValueType.setValue(AnimalBreedingValueTypeContentType.BREEDING);
-        animalRegistration.setBreedingValueType(breedingValueType);
+        animalRegistrationBuilder.setBreedingValueType(AnimalBreedingValueTypeContentType.BREEDING);
 
-        animalRegistration.addAnimalProductivity(createAnimalProductivity(
-                "12c91586-9dea-47a1-bfd1-a7262965eb80",
-                20,
-                "3ab3ed81-f394-47ac-9c2e-84b187d4f363"
-        ));
-
-        animalRegistration.addReferencedDocument(createReferencedDocument(
-                "ba5aed51-32d9-4c0f-8a04-c61acdc6d621",
+        animalRegistrationBuilder.addReferencedDocumentCode55(createReferencedDocument(
+                "ba5aed51-32d9-4c0f-8a04-c61acdc6d622",
                 55,
                 6
         ));
-        return  animalRegistration;
-    }
 
+        return  animalRegistrationBuilder.getAnimalRegistrationForIndividualRequest();
+    }
+    public static AnimalRegistration createAnimalRegistrationForModify(){
+        AnimalRegistrationBuilder animalRegistrationBuilder = new AnimalRegistrationBuilder();
+
+        animalRegistrationBuilder.setUUID("2770ac91-6477-4c3a-8349-72e884f09aaf");
+        animalRegistrationBuilder.setIdentityType(AnimalIdentityTypeContentType.INDIVIDUAL);
+        animalRegistrationBuilder.setAnimalRegistrationStatus(AnimalRegistrationStatusContentType.ACTIVE);
+        animalRegistrationBuilder.setInitialIdentificationType(AnimalIdentificationEventTypeContentType.OTHER);
+
+        AnimalBuilder animalBuilder = new AnimalBuilder();
+        animalBuilder.setAnimalSpecies("c3783d29-f78d-4481-8510-deab8cbc8d23");
+        animalBuilder.setBreed("45056575-62bb-4569-ae73-7eebabc008ae");
+        animalBuilder.setColor("green");
+        animalBuilder.setGender(AnimalGenderContentType.FEMALE);
+        animalBuilder.setName("Korova 2");
+        animalBuilder.setBirthDate(2022,8,8);
+
+
+        animalRegistrationBuilder.setSpecifiedAnimal(animalBuilder.getAnimal());
+        animalRegistrationBuilder.addSpecifiedAnimalIdentity(createAnimalIdentity(
+                createAnimalLabel(
+                        AnimalIDFormatContentType.OTHER,
+                        "2213210",
+                        AnimalLabelTypeContentType.ADDITIONAL,
+                        "141fdac3-e2a1-5c8c-21a3-0b50065e50a1",
+                        AnimalMarkingMeansTypeContentType.COLLAR
+                ),
+                createAssociatedMarkingEvent(
+                        VeterinaryEventTypeContentType.AME,
+                        10,
+                        11,
+                        2023,
+                        "28312a61-ae25-4128-8fd1-beeebbe87bf9"
+                )
+        ));
+
+        AnimalGeneticPassport passport = new AnimalGeneticPassport();
+        passport.setConclusion("string");
+        passport.setData("string");
+        animalRegistrationBuilder.setSpecifiedGeneticPassport(passport);
+
+        animalRegistrationBuilder.setKeepingDetails(createKeepingDetails(
+                "e42a49c5-3d27-4b11-a64a-e4ea89aac978",
+                "99e904cc-a48c-438f-86b4-3f5e28dbd07c",
+                "74dcb936-460d-4eee-b803-aa40e7a88033"
+        ));
+        animalRegistrationBuilder.setBreedingValueType(AnimalBreedingValueTypeContentType.BREEDING);
+
+        animalRegistrationBuilder.addReferencedDocumentCode55(createReferencedDocument(
+                "ba5aed51-32d9-4c0f-8a04-c61acdc6d622",
+                55,
+                6
+        ));
+
+        return  animalRegistrationBuilder.getAnimalRegistrationForIndividualRequest();
+    }
     public static Application createApplication(Object data,String issuerID){
         Application application = new Application();
         application.setServiceId("herriot.service:1.0");
@@ -331,16 +319,31 @@ public class Main {
         return application;
     }
 
+    public static SubmitApplicationRequest getModifyWrappedRequest(String APIKey, String issuerID, String login) throws DatatypeConfigurationException{
+        SubmitApplicationRequest submitApplicationRequest = new SubmitApplicationRequest();
+
+        ModifyRequestBuilder modifyRequestBuilder = new ModifyRequestBuilder();
+
+        modifyRequestBuilder.setLocalTransactionId("a371c8a0-e1b5-4a98-8bf1-cb1afc31f112");
+        modifyRequestBuilder.setInitiator(login);
+        modifyRequestBuilder.addAnimalRegistration(createAnimalRegistrationForModify());
+        ModifyAnimalRegistrationRequest registerAnimalRequest = modifyRequestBuilder.getRequest();
+
+        Application application = createApplication(registerAnimalRequest,issuerID);
+
+        submitApplicationRequest.setApplication(application);
+        submitApplicationRequest.setApiKey(APIKey);
+        return submitApplicationRequest;
+    }
+
     public static SubmitApplicationRequest getSubmitRequest(String APIKey, String issuerID, String login) throws DatatypeConfigurationException {
         SubmitApplicationRequest submitApplicationRequest = new SubmitApplicationRequest();
 
-        RegisterAnimalRequest registerAnimalRequest = new RegisterAnimalRequest();
-        registerAnimalRequest.setLocalTransactionId("a371c8a0-e1b5-4a98-8bf1-cb1afc31f111");
-        User initiator = new User();
-        initiator.setLogin(login);
-        registerAnimalRequest.setInitiator(initiator);
-        AnimalRegistration animalRegistration = createAnimalRegistration();
-        registerAnimalRequest.addAnimalRegistration(animalRegistration);
+        RegisterRequestBuilder registerRequestBuilder = new RegisterRequestBuilder();
+        registerRequestBuilder.setLocalTransactionId("a371c8a0-e1b5-4a98-8bf1-cb1afc31f112");
+        registerRequestBuilder.setInitiator(login);
+        registerRequestBuilder.addAnimalRegistration(createAnimalRegistration());
+        RegisterAnimalRequest registerAnimalRequest = registerRequestBuilder.getRequest();
 
         Application application = createApplication(registerAnimalRequest,issuerID);
 
@@ -397,201 +400,11 @@ public class Main {
         return soapMessage;
     }
 
-    public static SOAPMessage sendReceiveAplRequest(ReceiveApplicationResultRequest request, String endPoint, String auth){
-        StringWriter stringWriter = new StringWriter();
-        Marshaller marshaller;
-        try{
-            marshaller = createMarshaller(ReceiveApplicationResultRequest.class);
-            marshaller.marshal(request,stringWriter);
-        }catch (JAXBException ex){
-            throw new RuntimeException("Unable to marshall: " + ex.getMessage());
-        }
-        SOAPConnectionFactory soapConnectionFactory;
-        SOAPConnection soapConnection;
-        try {
-            soapConnectionFactory = SOAPConnectionFactory.newInstance();
-            soapConnection = soapConnectionFactory.createConnection();
-        }catch (SOAPException exception){
-            throw new RuntimeException("Unable to create connection: " + exception.getMessage());
-        }
-        SOAPMessage message = createMessage(stringWriter.toString(),
-                "receiveApplicationResult",
-                auth);
-        SOAPMessage result;
-        try {
-            result = soapConnection.call(message, endPoint);
-        }catch (SOAPException exception){
-            throw new RuntimeException("Unaable to send message: " + exception.getMessage());
-        }
-        return result;
-    }
-    public static SOAPMessage sendSubmitRequest(SubmitApplicationRequest request, String endPoint,String auth){
-        StringWriter stringWriter = new StringWriter();
-        Marshaller marshaller;
-        try{
-            marshaller = createMarshaller(SubmitApplicationRequest.class);
-            marshaller.marshal(request,stringWriter);
-        }catch (JAXBException ex){
-            throw new RuntimeException("Unable to marshall: " + ex.getMessage());
-        }
-        SOAPConnectionFactory soapConnectionFactory;
-        SOAPConnection soapConnection;
-        try {
-            soapConnectionFactory = SOAPConnectionFactory.newInstance();
-            soapConnection = soapConnectionFactory.createConnection();
-        }catch (SOAPException exception){
-            throw new RuntimeException("Unable to create connection: " + exception.getMessage());
-        }
-        SOAPMessage message = createMessage(stringWriter.toString(),
-                "registerAnimalRequest",
-                auth);
-        SOAPMessage result;
-        try {
-            result = soapConnection.call(message, endPoint);
-        }catch (SOAPException exception){
-            throw new RuntimeException("Unaable to send message: " + exception.getMessage());
-        }
-        return result;
-    }
-
-    public static SOAPMessage sentGetBERequest(GetBusinessEntityListRequest request, String endPoint,String auth){
-        StringWriter stringWriter = new StringWriter();
-        Marshaller marshaller;
-        try{
-            marshaller = createMarshaller(GetBusinessEntityListRequest.class);
-            marshaller.marshal(request,stringWriter);
-        }catch (JAXBException ex){
-            throw new RuntimeException("Unable to marshall: " + ex.getMessage());
-        }
-        SOAPConnectionFactory soapConnectionFactory;
-        SOAPConnection soapConnection;
-        try {
-            soapConnectionFactory = SOAPConnectionFactory.newInstance();
-            soapConnection = soapConnectionFactory.createConnection();
-        }catch (SOAPException exception){
-            throw new RuntimeException("Unable to create connection: " + exception.getMessage());
-        }
-        SOAPMessage message = createMessage(stringWriter.toString(),
-                "GetBusinessEntityList",
-                auth);
-        SOAPMessage result;
-        try {
-            result = soapConnection.call(message, endPoint);
-        }catch (SOAPException exception){
-            throw new RuntimeException("Unaable to send message: " + exception.getMessage());
-        }
-        return result;
-    }
-    public static SubmitApplicationResponse processSubmitSOAPResponse(SOAPMessage soapResponse){
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try{
-            if (soapResponse.getSOAPBody().hasFault()){
-                throw new RuntimeException("Soap request has fault: " + soapResponse.getSOAPBody().getFault().getFaultString());
-            }
-            soapResponse.writeTo(out);
-        }catch (SOAPException | IOException ex){
-            throw new RuntimeException("Something wrong with soapResponse:" + ex.getMessage() );
-        }
-
-
-
-        String strMsg = out.toString();
-        InputStream is = new ByteArrayInputStream(strMsg.getBytes());
-        XMLInputFactory xif = XMLInputFactory.newFactory();
-        XMLStreamReader xsr;
-        try {
-            xsr = xif.createXMLStreamReader(is);
-            xsr.nextTag();
-            xsr.nextTag();
-            xsr.nextTag();
-        }catch (XMLStreamException exception){
-            throw new RuntimeException("Unable to get xml body: " + exception.getMessage());
-        }
-        SubmitApplicationResponse response;
-        try{
-            JAXBContext contextResp = JAXBContext.newInstance(SubmitApplicationResponse.class);
-            Unmarshaller jaxbUnmarshaller = contextResp.createUnmarshaller();
-            response = (SubmitApplicationResponse) jaxbUnmarshaller.unmarshal(xsr);
-        }catch (JAXBException ex){
-            throw new RuntimeException("Unable to unmarshall: " + ex.getMessage());
-        }
-
-        return response;
-    }
-    public static ReceiveApplicationResultResponse processReceiveAplResponse(SOAPMessage soapResponse){
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try{
-            if (soapResponse.getSOAPBody().hasFault()){
-                throw new RuntimeException("Soap request has fault: " + soapResponse.getSOAPBody().getFault().getFaultString());
-            }
-            soapResponse.writeTo(out);
-        }catch (SOAPException | IOException ex){
-            throw new RuntimeException("Something wrong with soapResponse:" + ex.getMessage() );
-        }
-
-        String strMsg = out.toString();
-        InputStream is = new ByteArrayInputStream(strMsg.getBytes());
-        XMLInputFactory xif = XMLInputFactory.newFactory();
-        XMLStreamReader xsr;
-        try {
-            xsr = xif.createXMLStreamReader(is);
-            xsr.nextTag();
-            xsr.nextTag();
-            xsr.nextTag();
-        }catch (XMLStreamException exception){
-            throw new RuntimeException("Unable to get xml body: " + exception.getMessage());
-        }
-        ReceiveApplicationResultResponse response;
-        try{
-            JAXBContext contextResp = JAXBContext.newInstance(ReceiveApplicationResultResponse.class);
-            Unmarshaller jaxbUnmarshaller = contextResp.createUnmarshaller();
-            response = (ReceiveApplicationResultResponse) jaxbUnmarshaller.unmarshal(xsr);
-        }catch (JAXBException ex){
-            throw new RuntimeException("Unable to unmarshall: " + ex.getMessage());
-        }
-
-        return response;
-    }
-
-    public static GetBusinessEntityListResponse processGetBEResponse(SOAPMessage soapResponse){
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try{
-            if (soapResponse.getSOAPBody().hasFault()){
-                throw new RuntimeException("Soap request has fault: " + soapResponse.getSOAPBody().getFault().getFaultString());
-            }
-            soapResponse.writeTo(out);
-        }catch (SOAPException | IOException ex){
-            throw new RuntimeException("Something wrong with soapResponse:" + ex.getMessage() );
-        }
-
-        String strMsg = out.toString();
-        InputStream is = new ByteArrayInputStream(strMsg.getBytes());
-        XMLInputFactory xif = XMLInputFactory.newFactory();
-        XMLStreamReader xsr;
-        try {
-            xsr = xif.createXMLStreamReader(is);
-            xsr.nextTag();
-            xsr.nextTag();
-            xsr.nextTag();
-        }catch (XMLStreamException exception){
-            throw new RuntimeException("Unable to get xml body: " + exception.getMessage());
-        }
-        GetBusinessEntityListResponse response;
-        try{
-            JAXBContext contextResp = JAXBContext.newInstance(GetBusinessEntityListResponse.class);
-            Unmarshaller jaxbUnmarshaller = contextResp.createUnmarshaller();
-            response = (GetBusinessEntityListResponse) jaxbUnmarshaller.unmarshal(xsr);
-        }catch (JAXBException ex){
-            throw new RuntimeException("Unable to unmarshall: " + ex.getMessage());
-        }
-
-        return response;
-    }
-    public static void testGetBERequest(String addrEnterprise, String auth){
+    public static void testGetBERequest(String addrEnterprise, String auth,String SOAPAction){
         GetBusinessEntityListRequest getBErequest = new GetBusinessEntityListRequest();
-        SOAPMessage getBEResponse = sentGetBERequest(getBErequest,addrEnterprise,auth);
+        SOAPMessage getBEResponse = sendRequest(getBErequest,addrEnterprise,auth,SOAPAction);
         //getBEResponse.writeTo(System.out);
-        GetBusinessEntityListResponse response = processGetBEResponse(getBEResponse);
+        GetBusinessEntityListResponse response = processResponse(getBEResponse,GetBusinessEntityListResponse.class);
         List<BusinessEntity> BEList = response.getBusinessEntityList().getBusinessEntity();
         for (BusinessEntity entity: BEList
         ) {
@@ -602,39 +415,128 @@ public class Main {
     public static void testRegisterRequest(String APIKey,
                                            String IssuerId,
                                            String login,
-                                           String addrManagementService, String auth) throws DatatypeConfigurationException {
+                                           String addrManagementService,
+                                           String auth,
+                                           String loginRequest,
+                                           String SOAPActionReq,
+                                           String SOAPActionResp) throws DatatypeConfigurationException, SOAPException, IOException {
         //todo получить корректный логин и обработать ответ
-        SubmitApplicationRequest apl = getSubmitRequest(APIKey, IssuerId, login);
-        SOAPMessage soapResponse = sendSubmitRequest(apl,addrManagementService,auth);
-        SubmitApplicationResponse response = processSubmitSOAPResponse(soapResponse);
+        SubmitApplicationRequest apl = getSubmitRequest(APIKey, IssuerId, loginRequest);
+        SOAPMessage soapResponse = sendRequest(apl,addrManagementService,auth,SOAPActionReq);
+        SubmitApplicationResponse response = processResponse(soapResponse,SubmitApplicationResponse.class);
         String aplId = response.getApplication().getApplicationId();
         System.out.println(response.getApplication().getStatus());
         System.out.println(aplId);
 
         ReceiveApplicationResultRequest receiveApplicationResultRequest = new ReceiveApplicationResultRequest();
-        receiveApplicationResultRequest.setApiKey("MGE5MmFiMzktZWY5Ni00NWNkLWFlODgtMWNjMmIxYTdjMzRjMjgzMTJhNjEtYWUyNS00MTI4LThmZDEtYmVlZWJiZTg3YmY5");
+        receiveApplicationResultRequest.setApiKey(APIKey);
         receiveApplicationResultRequest.setApplicationId(aplId);
-        receiveApplicationResultRequest.setIssuerId("28312a61-ae25-4128-8fd1-beeebbe87bf9");
-
-        SOAPMessage responseAPL = sendReceiveAplRequest(receiveApplicationResultRequest,addrManagementService,auth);
-        ReceiveApplicationResultResponse receiveApplicationResultResponse = processReceiveAplResponse(responseAPL);
+        receiveApplicationResultRequest.setIssuerId(IssuerId);
+        SOAPMessage responseAPL = sendRequest(receiveApplicationResultRequest,addrManagementService,auth,SOAPActionResp);
+        responseAPL.writeTo(System.out);
+        ReceiveApplicationResultResponse receiveApplicationResultResponse = processResponse(responseAPL,ReceiveApplicationResultResponse.class);
         System.out.println(receiveApplicationResultResponse.getApplication().getStatus().value());
     }
+
+    public static void testModifyRequest(String APIKey,
+                                           String IssuerId,
+                                           String login,
+                                           String addrManagementService,
+                                           String auth,
+                                           String loginRequest,
+                                           String SOAPActionReq,
+                                           String SOAPActionResp) throws DatatypeConfigurationException, SOAPException, IOException {
+        //todo получить корректный логин и обработать ответ
+        SubmitApplicationRequest apl = getModifyWrappedRequest(APIKey, IssuerId, loginRequest);
+        SOAPMessage soapResponse = sendRequest(apl,addrManagementService,auth,SOAPActionReq);
+        SubmitApplicationResponse response = processResponse(soapResponse,SubmitApplicationResponse.class);
+        String aplId = response.getApplication().getApplicationId();
+        System.out.println(response.getApplication().getStatus());
+        System.out.println(aplId);
+
+        ReceiveApplicationResultRequest receiveApplicationResultRequest = new ReceiveApplicationResultRequest();
+        receiveApplicationResultRequest.setApiKey(APIKey);
+        receiveApplicationResultRequest.setApplicationId(aplId);
+        receiveApplicationResultRequest.setIssuerId(IssuerId);
+        SOAPMessage responseAPL = sendRequest(receiveApplicationResultRequest,addrManagementService,auth,SOAPActionResp);
+        responseAPL.writeTo(System.out);
+    }
+
+    public static <T> T processResponse(SOAPMessage soapResponse, Class<T> responceClass) {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try {
+            if (soapResponse.getSOAPBody().hasFault()) {
+                throw new RuntimeException("Soap request has fault: " + soapResponse.getSOAPBody().getFault().getFaultString());
+            }
+            soapResponse.writeTo(out);
+        } catch (SOAPException | IOException ex) {
+            throw new RuntimeException("Something wrong with soapResponse:" + ex.getMessage());
+        }
+
+        String strMsg = out.toString();
+        InputStream is = new ByteArrayInputStream(strMsg.getBytes());
+        XMLInputFactory xif = XMLInputFactory.newFactory();
+        XMLStreamReader xsr;
+        try {
+            xsr = xif.createXMLStreamReader(is);
+            xsr.nextTag();
+            xsr.nextTag();
+            xsr.nextTag();
+        } catch (XMLStreamException exception) {
+            throw new RuntimeException("Unable to get xml body: " + exception.getMessage());
+        }
+        T response;
+        try {
+            JAXBContext contextResp = JAXBContext.newInstance(responceClass);
+            Unmarshaller jaxbUnmarshaller = contextResp.createUnmarshaller();
+            //noinspection unchecked
+            response = (T) jaxbUnmarshaller.unmarshal(xsr);
+        } catch (JAXBException ex) {
+            throw new RuntimeException("Unable to unmarshall: " + ex.getMessage());
+        }
+
+        return response;
+    }
+
+    public static <T> SOAPMessage sendRequest(T request, String endPoint, String auth, String SOAPAction) {
+        StringWriter stringWriter = new StringWriter();
+        Marshaller marshaller;
+        try {
+            marshaller = createMarshaller(request.getClass());
+            marshaller.marshal(request, stringWriter);
+        } catch (JAXBException ex) {
+            throw new RuntimeException("Unable to marshall: " + ex.getMessage());
+        }
+        SOAPConnection soapConnection = SOAPConnectionHolder.getConnection();
+        SOAPMessage message = createMessage(stringWriter.toString(),
+                SOAPAction,
+                auth);
+        SOAPMessage result;
+        try {
+            result = soapConnection.call(message, endPoint);
+        } catch (SOAPException exception) {
+            throw new RuntimeException("Unable to send message: " + exception.getMessage());
+        }
+        return result;
+    }
+
     public static void main(String[] args) throws Exception {
 
 
         String addrAplManagementService = "https://api2.vetrf.ru:8002/platform/services/2.1/ApplicationManagementService";
         String addrEnterpriseService = "https://api2.vetrf.ru:8002/platform/herriot/services/1.0/EnterpriseService";
-        String APIKey,IssuerId,login,auth;
+        String APIKey,IssuerId,login,auth,loginRequest;
         File authInfo = new File("C:\\auth.txt");
         Scanner sc = new Scanner(authInfo);
         APIKey = sc.nextLine();
         IssuerId = sc.nextLine();
         login = sc.nextLine();
         auth = sc.nextLine();
+        loginRequest = sc.nextLine();
 
-        testRegisterRequest(APIKey, IssuerId, login, addrAplManagementService, auth);
-        //testGetBERequest(addrEnterpriseService,auth);
+        //testRegisterRequest(APIKey, IssuerId, login, addrAplManagementService, auth,loginRequest,"registerAnimalRequest","receiveApplicationResult");
+        //testGetBERequest(addrEnterpriseService,auth,"GetBusinessEntityList");
+        testModifyRequest(APIKey, IssuerId, login, addrAplManagementService, auth,loginRequest,"registerAnimalRequest","receiveApplicationResult");
 
     }
 }

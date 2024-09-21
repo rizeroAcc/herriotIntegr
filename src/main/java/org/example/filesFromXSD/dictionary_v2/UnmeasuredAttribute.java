@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
 
 
@@ -43,7 +44,6 @@ import jakarta.xml.bind.annotation.XmlType;
 public class UnmeasuredAttribute
     extends AdditionalAttribute
 {
-
     protected List<String> attrValue;
 
     /**
@@ -74,5 +74,10 @@ public class UnmeasuredAttribute
         }
         return this.attrValue;
     }
-
+    public void addAttrValue(String value){
+        if (attrValue == null) {
+            attrValue = new ArrayList<String>();
+        }
+        attrValue.add(value);
+    }
 }

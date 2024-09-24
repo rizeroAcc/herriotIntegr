@@ -7,6 +7,8 @@ import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
 import org.example.filesFromXSD.application.Application;
 import org.example.filesFromXSD.application.ApplicationDataWrapper;
+import org.example.filesFromXSD.application.ApplicationResultWrapper;
+import org.example.filesFromXSD.application.ApplicationStatus;
 import org.example.filesFromXSD.application.ws_defenitions.ReceiveApplicationResultRequest;
 import org.example.filesFromXSD.application.ws_defenitions.ReceiveApplicationResultResponse;
 import org.example.filesFromXSD.application.ws_defenitions.SubmitApplicationRequest;
@@ -428,14 +430,7 @@ public class Main {
         System.out.println(response.getApplication().getStatus());
         System.out.println(aplId);
 
-        ReceiveApplicationResultRequest receiveApplicationResultRequest = new ReceiveApplicationResultRequest();
-        receiveApplicationResultRequest.setApiKey(APIKey);
-        receiveApplicationResultRequest.setApplicationId(aplId);
-        receiveApplicationResultRequest.setIssuerId(IssuerId);
-        SOAPMessage responseAPL = sendRequest(receiveApplicationResultRequest,addrManagementService,auth,SOAPActionResp);
-        responseAPL.writeTo(System.out);
-        ReceiveApplicationResultResponse receiveApplicationResultResponse = processResponse(responseAPL,ReceiveApplicationResultResponse.class);
-        System.out.println(receiveApplicationResultResponse.getApplication().getStatus().value());
+        printTestApplicationResult(APIKey,aplId,IssuerId,addrManagementService,auth,SOAPActionResp);
     }
 
     public static void testModifyRequest(String APIKey,
@@ -451,17 +446,25 @@ public class Main {
         SOAPMessage soapResponse = sendRequest(apl,addrManagementService,auth,SOAPActionReq);
         SubmitApplicationResponse response = processResponse(soapResponse,SubmitApplicationResponse.class);
         String aplId = response.getApplication().getApplicationId();
-        System.out.println(response.getApplication().getStatus());
-        System.out.println(aplId);
 
+        printTestApplicationResult(APIKey,aplId,IssuerId,addrManagementService,auth,SOAPActionResp);
+
+    }
+
+    public static void printTestApplicationResult(String APIKey,String aplId,String IssuerId,String endPoint,String auth,String action) throws SOAPException, IOException {
         ReceiveApplicationResultRequest receiveApplicationResultRequest = new ReceiveApplicationResultRequest();
         receiveApplicationResultRequest.setApiKey(APIKey);
         receiveApplicationResultRequest.setApplicationId(aplId);
         receiveApplicationResultRequest.setIssuerId(IssuerId);
-        SOAPMessage responseAPL = sendRequest(receiveApplicationResultRequest,addrManagementService,auth,SOAPActionResp);
-        responseAPL.writeTo(System.out);
+        SOAPMessage SOAPresponseAPL;
+        ReceiveApplicationResultResponse response;
+        do {
+            SOAPresponseAPL = sendRequest(receiveApplicationResultRequest,endPoint,auth,action);
+            response = processResponse(SOAPresponseAPL, ReceiveApplicationResultResponse.class);
+            System.out.println(response.getApplication().getStatus());
+        }while (response.getApplication().getStatus() == ApplicationStatus.IN_PROCESS);
+        SOAPresponseAPL.writeTo(System.out);
     }
-
     public static <T> T processResponse(SOAPMessage soapResponse, Class<T> responceClass) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
@@ -492,7 +495,7 @@ public class Main {
             //noinspection unchecked
             response = (T) jaxbUnmarshaller.unmarshal(xsr);
         } catch (JAXBException ex) {
-            throw new RuntimeException("Unable to unmarshall: " + ex.getMessage());
+            throw new RuntimeException("Unable to unmarshall: " + ex.toString());
         }
 
         return response;
@@ -534,9 +537,9 @@ public class Main {
         auth = sc.nextLine();
         loginRequest = sc.nextLine();
 
-        //testRegisterRequest(APIKey, IssuerId, login, addrAplManagementService, auth,loginRequest,"registerAnimalRequest","receiveApplicationResult");
+        testRegisterRequest(APIKey, IssuerId, login, addrAplManagementService, auth,loginRequest,"registerAnimalRequest","receiveApplicationResult");
         //testGetBERequest(addrEnterpriseService,auth,"GetBusinessEntityList");
-        testModifyRequest(APIKey, IssuerId, login, addrAplManagementService, auth,loginRequest,"registerAnimalRequest","receiveApplicationResult");
+        //testModifyRequest(APIKey, IssuerId, login, addrAplManagementService, auth,loginRequest,"registerAnimalRequest","receiveApplicationResult");
 
     }
 }

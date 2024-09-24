@@ -8,11 +8,8 @@
 
 package org.example.filesFromXSD.application;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAnyElement;
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.*;
+import org.example.filesFromXSD.application.ws_defenitions.ReceiveApplicationResultResponse;
 
 
 /**
@@ -35,6 +32,9 @@ import jakarta.xml.bind.annotation.XmlType;
  * 
  * 
  */
+@XmlSeeAlso(
+        ReceiveApplicationResultResponse.class
+)
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ApplicationResultWrapper", propOrder = {
     "any"

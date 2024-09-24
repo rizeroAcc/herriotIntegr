@@ -37,6 +37,7 @@ import org.example.filesFromXSD.herriot_applications_v1.ModifyAnimalRegistration
 @XmlSeeAlso({
         HerriotApplicationRequest.class,
         ModifyAnimalRegistrationRequest.class
+
 })
 public abstract class ApplicationData {
 

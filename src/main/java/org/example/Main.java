@@ -20,6 +20,7 @@ import org.example.filesFromXSD.dictionary_v2.*;
 import org.example.filesFromXSD.herriot_applications_v1.AnimalRegistration;
 import org.example.filesFromXSD.herriot_applications_v1.ModifyAnimalRegistrationRequest;
 import org.example.filesFromXSD.herriot_applications_v1.RegisterAnimalRequest;
+import org.example.filesFromXSD.herriot_applications_v1.TerminateAnimalRegistrationRequest;
 import org.example.filesFromXSD.mercury_vet_document.*;
 import org.example.filesFromXSD.registry.GetBusinessEntityListRequest;
 import org.example.filesFromXSD.registry.GetBusinessEntityListResponse;
@@ -267,7 +268,7 @@ public class Main {
 
 
         animalRegistrationBuilder.setSpecifiedAnimal(animalBuilder.getAnimal());
-        animalRegistrationBuilder.addSpecifiedAnimalIdentity(createAnimalIdentity(
+        AnimalIdentity animalIdentity = createAnimalIdentity(
                 createAnimalLabel(
                         AnimalIDFormatContentType.OTHER,
                         "2213210",
@@ -282,7 +283,9 @@ public class Main {
                         2023,
                         "28312a61-ae25-4128-8fd1-beeebbe87bf9"
                 )
-        ));
+        );
+        animalIdentity.setGuid("65d2716e-9725-43f6-88fb-b18bb3dc9b19");
+        animalRegistrationBuilder.addSpecifiedAnimalIdentity(animalIdentity);
 
         AnimalGeneticPassport passport = new AnimalGeneticPassport();
         passport.setConclusion("string");
@@ -333,6 +336,35 @@ public class Main {
 
         Application application = createApplication(registerAnimalRequest,issuerID);
 
+        submitApplicationRequest.setApplication(application);
+        submitApplicationRequest.setApiKey(APIKey);
+        return submitApplicationRequest;
+    }
+
+    public static SubmitApplicationRequest getTerminateWrappedRequest(String APIKey, String issuerID, String login){
+        SubmitApplicationRequest submitApplicationRequest = new SubmitApplicationRequest();
+
+        TerminateRegistrationRequestBuilder terminateRegistrationBuilder = new TerminateRegistrationRequestBuilder();
+        terminateRegistrationBuilder.setLocalTransactionId("a371c8a0-e1b5-4a98-8bf1-cb1afc31f112");
+        terminateRegistrationBuilder.setInitiator(login);
+
+        AnimalLifecycleEvent lifecycleEvent = new AnimalLifecycleEvent();
+        VeterinaryEventType type = new VeterinaryEventType();
+        type.setValue(VeterinaryEventTypeContentType.APS);
+        lifecycleEvent.setType(type);
+        ComplexDatePeriod datePeriod = new ComplexDatePeriod();
+        ComplexDate date = new ComplexDate();
+        date.setYear(2024);
+        date.setMonth(9);
+        date.setDay(25);
+        datePeriod.setDate(date);
+        lifecycleEvent.setActualDate(datePeriod);
+
+        terminateRegistrationBuilder.setLifecycleEvent(lifecycleEvent);
+        terminateRegistrationBuilder.addRegistrationRef("c3533a62-b1d1-4177-87ce-a696f47d2555");
+
+        TerminateAnimalRegistrationRequest terminateAnimalRequest = terminateRegistrationBuilder.getRequest();
+        Application application = createApplication(terminateAnimalRequest,issuerID);
         submitApplicationRequest.setApplication(application);
         submitApplicationRequest.setApiKey(APIKey);
         return submitApplicationRequest;
@@ -451,6 +483,25 @@ public class Main {
 
     }
 
+    public static void testTerminateRequest(String APIKey,
+                                         String IssuerId,
+                                         String login,
+                                         String addrManagementService,
+                                         String auth,
+                                         String loginRequest,
+                                         String SOAPActionReq,
+                                         String SOAPActionResp) throws DatatypeConfigurationException, SOAPException, IOException {
+        //todo получить корректный логин и обработать ответ
+        SubmitApplicationRequest apl = getTerminateWrappedRequest(APIKey, IssuerId, loginRequest);
+        SOAPMessage soapResponse = sendRequest(apl,addrManagementService,auth,SOAPActionReq);
+        //soapResponse.writeTo(System.out);
+        SubmitApplicationResponse response = processResponse(soapResponse,SubmitApplicationResponse.class);
+        String aplId = response.getApplication().getApplicationId();
+
+        printTestApplicationResult(APIKey,aplId,IssuerId,addrManagementService,auth,SOAPActionResp);
+
+    }
+
     public static void printTestApplicationResult(String APIKey,String aplId,String IssuerId,String endPoint,String auth,String action) throws SOAPException, IOException {
         ReceiveApplicationResultRequest receiveApplicationResultRequest = new ReceiveApplicationResultRequest();
         receiveApplicationResultRequest.setApiKey(APIKey);
@@ -537,9 +588,9 @@ public class Main {
         auth = sc.nextLine();
         loginRequest = sc.nextLine();
 
-        testRegisterRequest(APIKey, IssuerId, login, addrAplManagementService, auth,loginRequest,"registerAnimalRequest","receiveApplicationResult");
+        //testRegisterRequest(APIKey, IssuerId, login, addrAplManagementService, auth,loginRequest,"registerAnimalRequest","receiveApplicationResult");
         //testGetBERequest(addrEnterpriseService,auth,"GetBusinessEntityList");
         //testModifyRequest(APIKey, IssuerId, login, addrAplManagementService, auth,loginRequest,"registerAnimalRequest","receiveApplicationResult");
-
+        testTerminateRequest(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"terminateAnimalRegistrationRequest","receiveApplicationResult");
     }
 }

@@ -10,10 +10,8 @@ package org.example.filesFromXSD.herriot_applications_v1;
 
 import java.util.ArrayList;
 import java.util.List;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlType;
+
+import jakarta.xml.bind.annotation.*;
 import org.example.filesFromXSD.mercury_vet_document.AnimalLifecycleEvent;
 
 
@@ -41,6 +39,7 @@ import org.example.filesFromXSD.mercury_vet_document.AnimalLifecycleEvent;
  * 
  * 
  */
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "TerminateAnimalRegistrationRequest", propOrder = {
     "referencedLifecycleEvent",
@@ -106,6 +105,13 @@ public class TerminateAnimalRegistrationRequest
             animalRegistrationRef = new ArrayList<AnimalRegistration>();
         }
         return this.animalRegistrationRef;
+    }
+
+    public void addAnimalRegistrationRef(AnimalRegistration registration){
+        if (animalRegistrationRef == null) {
+            animalRegistrationRef = new ArrayList<AnimalRegistration>();
+        }
+        animalRegistrationRef.add(registration);
     }
 
 }

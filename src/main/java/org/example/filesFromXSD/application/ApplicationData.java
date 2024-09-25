@@ -14,6 +14,7 @@ import jakarta.xml.bind.annotation.XmlSeeAlso;
 import jakarta.xml.bind.annotation.XmlType;
 import org.example.filesFromXSD.herriot_applications_v1.HerriotApplicationRequest;
 import org.example.filesFromXSD.herriot_applications_v1.ModifyAnimalRegistrationRequest;
+import org.example.filesFromXSD.herriot_applications_v1.TerminateAnimalRegistrationRequest;
 
 
 /**
@@ -36,8 +37,8 @@ import org.example.filesFromXSD.herriot_applications_v1.ModifyAnimalRegistration
 @XmlType(name = "ApplicationData")
 @XmlSeeAlso({
         HerriotApplicationRequest.class,
-        ModifyAnimalRegistrationRequest.class
-
+        ModifyAnimalRegistrationRequest.class,
+        TerminateAnimalRegistrationRequest.class
 })
 public abstract class ApplicationData {
 

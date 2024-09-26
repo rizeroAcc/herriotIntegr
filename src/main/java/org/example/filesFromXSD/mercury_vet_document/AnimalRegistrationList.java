@@ -75,5 +75,10 @@ public class AnimalRegistrationList
         }
         return this.animalRegistration;
     }
-
+    public void addAnimalRegistration(AnimalRegistration registration) {
+        if (animalRegistration == null) {
+            animalRegistration = new ArrayList<AnimalRegistration>();
+        }
+        animalRegistration.add(registration);
+    }
 }

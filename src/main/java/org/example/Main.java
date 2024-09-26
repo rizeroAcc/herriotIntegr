@@ -5,6 +5,8 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
+import org.example.filesFromXSD.GetRegistrationHistoryRequestBuilder;
+import org.example.filesFromXSD.RegisterAnimalMovementBuilder;
 import org.example.filesFromXSD.application.Application;
 import org.example.filesFromXSD.application.ApplicationDataWrapper;
 import org.example.filesFromXSD.application.ApplicationResultWrapper;
@@ -17,10 +19,7 @@ import org.example.filesFromXSD.base.ComplexDate;
 import org.example.filesFromXSD.base.ComplexDatePeriod;
 import org.example.filesFromXSD.codelist.*;
 import org.example.filesFromXSD.dictionary_v2.*;
-import org.example.filesFromXSD.herriot_applications_v1.AnimalRegistration;
-import org.example.filesFromXSD.herriot_applications_v1.ModifyAnimalRegistrationRequest;
-import org.example.filesFromXSD.herriot_applications_v1.RegisterAnimalRequest;
-import org.example.filesFromXSD.herriot_applications_v1.TerminateAnimalRegistrationRequest;
+import org.example.filesFromXSD.herriot_applications_v1.*;
 import org.example.filesFromXSD.mercury_vet_document.*;
 import org.example.filesFromXSD.registry.GetBusinessEntityListRequest;
 import org.example.filesFromXSD.registry.GetBusinessEntityListResponse;
@@ -216,7 +215,7 @@ public class Main {
         animalRegistrationBuilder.addSpecifiedAnimalIdentity(createAnimalIdentity(
                 createAnimalLabel(
                         AnimalIDFormatContentType.OTHER,
-                        "2213210",
+                        "2213215",
                         AnimalLabelTypeContentType.ADDITIONAL,
                         "141fdac3-e2a1-5c8c-21a3-0b50065e50a1",
                         AnimalMarkingMeansTypeContentType.COLLAR
@@ -243,7 +242,7 @@ public class Main {
         animalRegistrationBuilder.setBreedingValueType(AnimalBreedingValueTypeContentType.BREEDING);
 
         animalRegistrationBuilder.addReferencedDocumentCode55(createReferencedDocument(
-                "ba5aed51-32d9-4c0f-8a04-c61acdc6d622",
+                "ba5aed51-32d9-4c0f-8a04-c61acdc6d625",
                 55,
                 6
         ));
@@ -253,7 +252,7 @@ public class Main {
     public static AnimalRegistration createAnimalRegistrationForModify(){
         AnimalRegistrationBuilder animalRegistrationBuilder = new AnimalRegistrationBuilder();
 
-        animalRegistrationBuilder.setUUID("2770ac91-6477-4c3a-8349-72e884f09aaf");
+        animalRegistrationBuilder.setUUID("8f58264b-1f2a-44d7-9941-56e1eaafe049");
         animalRegistrationBuilder.setIdentityType(AnimalIdentityTypeContentType.INDIVIDUAL);
         animalRegistrationBuilder.setAnimalRegistrationStatus(AnimalRegistrationStatusContentType.ACTIVE);
         animalRegistrationBuilder.setInitialIdentificationType(AnimalIdentificationEventTypeContentType.OTHER);
@@ -271,7 +270,7 @@ public class Main {
         AnimalIdentity animalIdentity = createAnimalIdentity(
                 createAnimalLabel(
                         AnimalIDFormatContentType.OTHER,
-                        "2213210",
+                        "2213215",
                         AnimalLabelTypeContentType.ADDITIONAL,
                         "141fdac3-e2a1-5c8c-21a3-0b50065e50a1",
                         AnimalMarkingMeansTypeContentType.COLLAR
@@ -284,7 +283,7 @@ public class Main {
                         "28312a61-ae25-4128-8fd1-beeebbe87bf9"
                 )
         );
-        animalIdentity.setGuid("65d2716e-9725-43f6-88fb-b18bb3dc9b19");
+        animalIdentity.setGuid("cd01aa21-0dcc-4cf8-bcc3-1904e4feb09f");
         animalRegistrationBuilder.addSpecifiedAnimalIdentity(animalIdentity);
 
         AnimalGeneticPassport passport = new AnimalGeneticPassport();
@@ -300,7 +299,7 @@ public class Main {
         animalRegistrationBuilder.setBreedingValueType(AnimalBreedingValueTypeContentType.BREEDING);
 
         animalRegistrationBuilder.addReferencedDocumentCode55(createReferencedDocument(
-                "ba5aed51-32d9-4c0f-8a04-c61acdc6d622",
+                "ba5aed51-32d9-4c0f-8a04-c61acdc6d625",
                 55,
                 6
         ));
@@ -386,6 +385,58 @@ public class Main {
         return submitApplicationRequest;
     }
 
+    public static SubmitApplicationRequest getRegistrationHistoryRequest(String APIKey, String issuerID, String login){
+        SubmitApplicationRequest submitApplicationRequest = new SubmitApplicationRequest();
+
+        GetRegistrationHistoryRequestBuilder builder = new GetRegistrationHistoryRequestBuilder();
+
+        builder.setLocalTransactionId("a371c8a0-e1b5-4a98-8bf1-cb1afc31f112");
+        builder.setInitiator(login);
+        builder.setGuid("9f0c6db6-1ecd-46c4-bf80-8f1a620bef6c");
+        GetAnimalRegistrationHistoryRequest request = builder.getRequest();
+
+        Application application = createApplication(request,issuerID);
+
+        submitApplicationRequest.setApplication(application);
+        submitApplicationRequest.setApiKey(APIKey);
+        return submitApplicationRequest;
+    }
+    public static SubmitApplicationRequest getMovementRequest(String APIKey, String issuerID, String login){
+        SubmitApplicationRequest submitApplicationRequest = new SubmitApplicationRequest();
+
+        RegisterAnimalMovementBuilder builder = new RegisterAnimalMovementBuilder();
+
+        builder.setLocalTransactionId("a371c8a0-e1b5-4a98-8bf1-cb1afc31f112");
+        builder.setInitiator(login);
+        builder.addAnimalRegistration("9f0c6db6-1ecd-46c4-bf80-8f1a620bef6c");
+
+        AnimalMovementEvent movementEvent = new AnimalMovementEvent();
+        ComplexDatePeriod datePeriod = new ComplexDatePeriod();
+        ComplexDate date = new ComplexDate();
+        date.setYear(2024);
+        date.setMonth(9);
+        date.setDay(25);
+        datePeriod.setDate(date);
+        movementEvent.setActualDate(datePeriod);
+        SupervisedObject supervisedObject = new SupervisedObject();
+        supervisedObject.setGuid("e42a49c5-3d27-4b11-a64a-e4ea89aac978");
+
+        movementEvent.setConsignor(supervisedObject);
+        movementEvent.setConsignee(supervisedObject);
+        AnimalKeepingPurpose purpose = new AnimalKeepingPurpose();
+        purpose.setGuid("a3f609d7-89f1-4e11-86e2-6e842d584b5e");
+        movementEvent.setPurpose(purpose);
+
+        builder.setReferencedMovementEvent(movementEvent);
+
+        RegisterAnimalMovementEventRequest request = builder.getRequest();
+
+        Application application = createApplication(request,issuerID);
+
+        submitApplicationRequest.setApplication(application);
+        submitApplicationRequest.setApiKey(APIKey);
+        return submitApplicationRequest;
+    }
     public static org.w3c.dom.Document getDocument(String xmlData) throws Exception {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         dbFactory.setNamespaceAware(true);
@@ -434,6 +485,41 @@ public class Main {
         return soapMessage;
     }
 
+    public static void testRegisterAnimalMovement(String APIKey,
+                                             String IssuerId,
+                                             String login,
+                                             String addrManagementService,
+                                             String auth,
+                                             String loginRequest,
+                                             String SOAPActionReq,
+                                             String SOAPActionResp) throws SOAPException, IOException {
+        SubmitApplicationRequest apl = getMovementRequest(APIKey, IssuerId, loginRequest);
+        SOAPMessage soapResponse = sendRequest(apl,addrManagementService,auth,SOAPActionReq);
+        SubmitApplicationResponse response = processResponse(soapResponse,SubmitApplicationResponse.class);
+        String aplId = response.getApplication().getApplicationId();
+        System.out.println(response.getApplication().getStatus());
+        System.out.println(aplId);
+
+        printTestApplicationResult(APIKey,aplId,IssuerId,addrManagementService,auth,SOAPActionResp);
+    }
+
+    public static void testGetHistoryRequest(String APIKey,
+                                             String IssuerId,
+                                             String login,
+                                             String addrManagementService,
+                                             String auth,
+                                             String loginRequest,
+                                             String SOAPActionReq,
+                                             String SOAPActionResp) throws SOAPException, IOException {
+        SubmitApplicationRequest apl = getRegistrationHistoryRequest(APIKey, IssuerId, loginRequest);
+        SOAPMessage soapResponse = sendRequest(apl,addrManagementService,auth,SOAPActionReq);
+        SubmitApplicationResponse response = processResponse(soapResponse,SubmitApplicationResponse.class);
+        String aplId = response.getApplication().getApplicationId();
+        System.out.println(response.getApplication().getStatus());
+        System.out.println(aplId);
+
+        printTestApplicationResult(APIKey,aplId,IssuerId,addrManagementService,auth,SOAPActionResp);
+    }
     public static void testGetBERequest(String addrEnterprise, String auth,String SOAPAction){
         GetBusinessEntityListRequest getBErequest = new GetBusinessEntityListRequest();
         SOAPMessage getBEResponse = sendRequest(getBErequest,addrEnterprise,auth,SOAPAction);
@@ -591,6 +677,8 @@ public class Main {
         //testRegisterRequest(APIKey, IssuerId, login, addrAplManagementService, auth,loginRequest,"registerAnimalRequest","receiveApplicationResult");
         //testGetBERequest(addrEnterpriseService,auth,"GetBusinessEntityList");
         //testModifyRequest(APIKey, IssuerId, login, addrAplManagementService, auth,loginRequest,"registerAnimalRequest","receiveApplicationResult");
-        testTerminateRequest(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"terminateAnimalRegistrationRequest","receiveApplicationResult");
+        //testTerminateRequest(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"terminateAnimalRegistrationRequest","receiveApplicationResult");
+        //testGetHistoryRequest(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"getAnimalRegistrationHistoryRequest","receiveApplicationResult");
+        testRegisterAnimalMovement(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"registerAnimalMovementEventRequest","receiveApplicationResult");
     }
 }

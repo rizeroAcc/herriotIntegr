@@ -8,10 +8,7 @@
 
 package org.example.filesFromXSD.herriot_applications_v1;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.*;
 import org.example.filesFromXSD.mercury_vet_document.AnimalMovementEvent;
 import org.example.filesFromXSD.mercury_vet_document.AnimalRegistrationList;
 
@@ -40,6 +37,7 @@ import org.example.filesFromXSD.mercury_vet_document.AnimalRegistrationList;
  * 
  * 
  */
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RegisterAnimalMovementEventRequest", propOrder = {
     "referencedMovementEvent",

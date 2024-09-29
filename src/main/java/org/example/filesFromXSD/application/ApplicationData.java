@@ -38,7 +38,8 @@ import org.example.filesFromXSD.herriot_applications_v1.*;
         ModifyAnimalRegistrationRequest.class,
         TerminateAnimalRegistrationRequest.class,
         GetAnimalRegistrationHistoryRequest.class,
-        RegisterAnimalMovementEventRequest.class
+        RegisterAnimalMovementEventRequest.class,
+        GetAnimalRegistrationChangesListRequest.class
 })
 public abstract class ApplicationData {
 

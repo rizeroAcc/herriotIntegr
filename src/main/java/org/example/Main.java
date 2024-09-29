@@ -401,6 +401,24 @@ public class Main {
         submitApplicationRequest.setApiKey(APIKey);
         return submitApplicationRequest;
     }
+
+    public static SubmitApplicationRequest getRegistrationChangesListRequest(String APIKey, String issuerID, String login) throws DatatypeConfigurationException {
+        SubmitApplicationRequest submitApplicationRequest = new SubmitApplicationRequest();
+
+        GetAnimalRegistrationChangesListBuilder builder = new GetAnimalRegistrationChangesListBuilder();
+
+        builder.setLocalTransactionId("a371c8a0-e1b5-4a98-8bf1-cb1afc31f112");
+        builder.setInitiator(login);
+        builder.setRegion("639efe9d-3fc8-4438-8e70-ec4f2321f2a7");
+        builder.addOperator("e42a49c5-3d27-4b11-a64a-e4ea89aac978");
+
+        Application application = createApplication(builder.getRequest(),issuerID);
+
+        submitApplicationRequest.setApplication(application);
+        submitApplicationRequest.setApiKey(APIKey);
+        return submitApplicationRequest;
+    }
+
     public static SubmitApplicationRequest getMovementRequest(String APIKey, String issuerID, String login){
         SubmitApplicationRequest submitApplicationRequest = new SubmitApplicationRequest();
 
@@ -503,7 +521,7 @@ public class Main {
         printTestApplicationResult(APIKey,aplId,IssuerId,addrManagementService,auth,SOAPActionResp);
     }
 
-    public static void testGetHistoryRequest(String APIKey,
+    public static Application testGetHistoryRequest(String APIKey,
                                              String IssuerId,
                                              String login,
                                              String addrManagementService,
@@ -518,7 +536,8 @@ public class Main {
         System.out.println(response.getApplication().getStatus());
         System.out.println(aplId);
 
-        printTestApplicationResult(APIKey,aplId,IssuerId,addrManagementService,auth,SOAPActionResp);
+        Application application = printTestApplicationResult(APIKey,aplId,IssuerId,addrManagementService,auth,SOAPActionResp);
+        return application;
     }
     public static void testGetBERequest(String addrEnterprise, String auth,String SOAPAction){
         GetBusinessEntityListRequest getBErequest = new GetBusinessEntityListRequest();
@@ -550,6 +569,25 @@ public class Main {
 
         printTestApplicationResult(APIKey,aplId,IssuerId,addrManagementService,auth,SOAPActionResp);
     }
+    public static void testGetRegistrationChangesRequest(String APIKey,
+                                           String IssuerId,
+                                           String login,
+                                           String addrManagementService,
+                                           String auth,
+                                           String loginRequest,
+                                           String SOAPActionReq,
+                                           String SOAPActionResp) throws DatatypeConfigurationException, SOAPException, IOException {
+        //todo получить корректный логин и обработать ответ
+        SubmitApplicationRequest apl = getRegistrationChangesListRequest(APIKey, IssuerId, loginRequest);
+        SOAPMessage soapResponse = sendRequest(apl,addrManagementService,auth,SOAPActionReq);
+        SubmitApplicationResponse response = processResponse(soapResponse,SubmitApplicationResponse.class);
+        String aplId = response.getApplication().getApplicationId();
+        System.out.println(response.getApplication().getStatus());
+        System.out.println(aplId);
+
+        printTestApplicationResult(APIKey,aplId,IssuerId,addrManagementService,auth,SOAPActionResp);
+    }
+
 
     public static void testModifyRequest(String APIKey,
                                            String IssuerId,
@@ -588,7 +626,7 @@ public class Main {
 
     }
 
-    public static void printTestApplicationResult(String APIKey,String aplId,String IssuerId,String endPoint,String auth,String action) throws SOAPException, IOException {
+    public static Application printTestApplicationResult(String APIKey,String aplId,String IssuerId,String endPoint,String auth,String action) throws SOAPException, IOException {
         ReceiveApplicationResultRequest receiveApplicationResultRequest = new ReceiveApplicationResultRequest();
         receiveApplicationResultRequest.setApiKey(APIKey);
         receiveApplicationResultRequest.setApplicationId(aplId);
@@ -601,6 +639,7 @@ public class Main {
             System.out.println(response.getApplication().getStatus());
         }while (response.getApplication().getStatus() == ApplicationStatus.IN_PROCESS);
         SOAPresponseAPL.writeTo(System.out);
+        return response.getApplication();
     }
     public static <T> T processResponse(SOAPMessage soapResponse, Class<T> responceClass) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -679,6 +718,7 @@ public class Main {
         //testModifyRequest(APIKey, IssuerId, login, addrAplManagementService, auth,loginRequest,"registerAnimalRequest","receiveApplicationResult");
         //testTerminateRequest(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"terminateAnimalRegistrationRequest","receiveApplicationResult");
         //testGetHistoryRequest(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"getAnimalRegistrationHistoryRequest","receiveApplicationResult");
-        testRegisterAnimalMovement(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"registerAnimalMovementEventRequest","receiveApplicationResult");
+        //testRegisterAnimalMovement(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"registerAnimalMovementEventRequest","receiveApplicationResult");
+        testGetRegistrationChangesRequest(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"getAnimalRegistrationChangesListRequest","receiveApplicationResult");
     }
 }

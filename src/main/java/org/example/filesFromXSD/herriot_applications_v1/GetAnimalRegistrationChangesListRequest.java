@@ -10,10 +10,8 @@ package org.example.filesFromXSD.herriot_applications_v1;
 
 import java.util.ArrayList;
 import java.util.List;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlType;
+
+import jakarta.xml.bind.annotation.*;
 import org.example.filesFromXSD.base.DateInterval;
 import org.example.filesFromXSD.base.ListOptions;
 import org.example.filesFromXSD.dictionary_v2.AnimalSpecies;
@@ -51,6 +49,7 @@ import org.example.filesFromXSD.dictionary_v2.SupervisedObject;
  * 
  * 
  */
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "GetAnimalRegistrationChangesListRequest", propOrder = {
     "listOptions",
@@ -204,6 +203,13 @@ public class GetAnimalRegistrationChangesListRequest
         return this.operator;
     }
 
+    public void addOperator(SupervisedObject op) {
+        if (operator == null) {
+            operator = new ArrayList<SupervisedObject>();
+        }
+        operator.add(op);
+    }
+
     /**
      * Gets the value of the animalSpecies property.
      * 
@@ -231,6 +237,12 @@ public class GetAnimalRegistrationChangesListRequest
             animalSpecies = new ArrayList<AnimalSpecies>();
         }
         return this.animalSpecies;
+    }
+    public void addAnimalSpecies(AnimalSpecies species){
+        if (animalSpecies == null) {
+            animalSpecies = new ArrayList<AnimalSpecies>();
+        }
+        animalSpecies.add(species);
     }
 
 }

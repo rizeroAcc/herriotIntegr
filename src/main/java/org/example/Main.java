@@ -21,10 +21,7 @@ import org.example.filesFromXSD.codelist.*;
 import org.example.filesFromXSD.dictionary_v2.*;
 import org.example.filesFromXSD.herriot_applications_v1.*;
 import org.example.filesFromXSD.mercury_vet_document.*;
-import org.example.filesFromXSD.registry.GetAnimalMarkingLocationListRequest;
-import org.example.filesFromXSD.registry.GetAnimalMarkingLocationListResponse;
-import org.example.filesFromXSD.registry.GetBusinessEntityListRequest;
-import org.example.filesFromXSD.registry.GetBusinessEntityListResponse;
+import org.example.filesFromXSD.registry.*;
 import org.xml.sax.InputSource;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -555,13 +552,24 @@ public class Main {
     }
     public static void testGetMarkingLocationsList(String addrEnterprise, String auth,String SOAPAction) throws SOAPException, IOException {
         GetAnimalMarkingLocationListRequest getBErequest = new GetAnimalMarkingLocationListRequest();
-        SOAPMessage getBEResponse = sendRequest(getBErequest,addrEnterprise,auth,SOAPAction);
+        SOAPMessage getResponse = sendRequest(getBErequest,addrEnterprise,auth,SOAPAction);
         //getBEResponse.writeTo(System.out);
-        GetAnimalMarkingLocationListResponse response = processResponse(getBEResponse, GetAnimalMarkingLocationListResponse.class);
+        GetAnimalMarkingLocationListResponse response = processResponse(getResponse, GetAnimalMarkingLocationListResponse.class);
         AnimalMarkingLocationList ListWrap = response.getAnimalMarkingLocationList();
         List<AnimalMarkingLocation> locations = ListWrap.getAnimalMarkingLocation();
         for (AnimalMarkingLocation location: locations){
             System.out.println(location.getName());
+        }
+    }
+    public static void testGetKeepingPurposeList(String addrEnterprise, String auth,String SOAPAction) throws SOAPException, IOException {
+        GetAnimalKeepingPurposeListRequest getBErequest = new GetAnimalKeepingPurposeListRequest();
+        SOAPMessage getResponse = sendRequest(getBErequest,addrEnterprise,auth,SOAPAction);
+        //getBEResponse.writeTo(System.out);
+        GetAnimalKeepingPurposeListResponse response = processResponse(getResponse, GetAnimalKeepingPurposeListResponse.class);
+        AnimalKeepingPurposeList ListWrap = response.getAnimalKeepingPurposeList();
+        List<AnimalKeepingPurpose> locations = ListWrap.getAnimalKeepingPurpose();
+        for (AnimalKeepingPurpose purpose: locations){
+            System.out.println(purpose.getName());
         }
     }
     public static void testRegisterRequest(String APIKey,
@@ -733,6 +741,7 @@ public class Main {
         //testGetHistoryRequest(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"getAnimalRegistrationHistoryRequest","receiveApplicationResult");
         //testRegisterAnimalMovement(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"registerAnimalMovementEventRequest","receiveApplicationResult");
         //testGetRegistrationChangesRequest(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"getAnimalRegistrationChangesListRequest","receiveApplicationResult");
-        testGetMarkingLocationsList(addrDS,auth,"GetAnimalMarkingLocationList");
+        //testGetMarkingLocationsList(addrDS,auth,"GetAnimalMarkingLocationList");
+        testGetKeepingPurposeList(addrDS,auth,"GetAnimalKeepingPurposeList");
     }
 }

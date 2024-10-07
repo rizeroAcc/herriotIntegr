@@ -5,6 +5,8 @@
     <file url="file://$PROJECT_DIR$/src/main/java/org/example/filesFromXSD/herriot_applications_v1/GetAnimalRegistrationHistoryRequest.java" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/src/main/java/org/example/filesFromXSD/registry/GetAnimalKeepingPurposeListRequest.java" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/src/main/java/org/example/filesFromXSD/registry/GetAnimalKeepingPurposeListResponse.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/example/filesFromXSD/registry/GetAnimalKeepingTypeListRequest.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/example/filesFromXSD/registry/GetAnimalKeepingTypeListResponse.java" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/src/main/java/org/example/filesFromXSD/registry/GetAnimalMarkingLocationListRequest.java" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/src/main/java/org/example/filesFromXSD/registry/GetAnimalMarkingLocationListResponse.java" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />

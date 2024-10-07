@@ -572,6 +572,17 @@ public class Main {
             System.out.println(purpose.getName());
         }
     }
+    public static void testGetKeepingTypeList(String addrEnterprise, String auth,String SOAPAction) throws SOAPException, IOException {
+        GetAnimalKeepingTypeListRequest getBErequest = new GetAnimalKeepingTypeListRequest();
+        SOAPMessage getResponse = sendRequest(getBErequest,addrEnterprise,auth,SOAPAction);
+        //getBEResponse.writeTo(System.out);
+        GetAnimalKeepingTypeListResponse response = processResponse(getResponse, GetAnimalKeepingTypeListResponse.class);
+        AnimalKeepingTypeList ListWrap = response.getAnimalKeepingTypeList();
+        List<AnimalKeepingType> locations = ListWrap.getAnimalKeepingType();
+        for (AnimalKeepingType type: locations){
+            System.out.println(type.getName());
+        }
+    }
     public static void testRegisterRequest(String APIKey,
                                            String IssuerId,
                                            String login,
@@ -742,6 +753,7 @@ public class Main {
         //testRegisterAnimalMovement(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"registerAnimalMovementEventRequest","receiveApplicationResult");
         //testGetRegistrationChangesRequest(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"getAnimalRegistrationChangesListRequest","receiveApplicationResult");
         //testGetMarkingLocationsList(addrDS,auth,"GetAnimalMarkingLocationList");
-        testGetKeepingPurposeList(addrDS,auth,"GetAnimalKeepingPurposeList");
+        //testGetKeepingPurposeList(addrDS,auth,"GetAnimalKeepingPurposeList");
+        testGetKeepingTypeList(addrDS,auth,"GetAnimalKeepingTypeList");
     }
 }

@@ -21,6 +21,8 @@ import org.example.filesFromXSD.codelist.*;
 import org.example.filesFromXSD.dictionary_v2.*;
 import org.example.filesFromXSD.herriot_applications_v1.*;
 import org.example.filesFromXSD.mercury_vet_document.*;
+import org.example.filesFromXSD.registry.GetAnimalMarkingLocationListRequest;
+import org.example.filesFromXSD.registry.GetAnimalMarkingLocationListResponse;
 import org.example.filesFromXSD.registry.GetBusinessEntityListRequest;
 import org.example.filesFromXSD.registry.GetBusinessEntityListResponse;
 import org.xml.sax.InputSource;
@@ -551,6 +553,17 @@ public class Main {
                 System.out.println(entity.getGuid());
         }
     }
+    public static void testGetMarkingLocationsList(String addrEnterprise, String auth,String SOAPAction) throws SOAPException, IOException {
+        GetAnimalMarkingLocationListRequest getBErequest = new GetAnimalMarkingLocationListRequest();
+        SOAPMessage getBEResponse = sendRequest(getBErequest,addrEnterprise,auth,SOAPAction);
+        //getBEResponse.writeTo(System.out);
+        GetAnimalMarkingLocationListResponse response = processResponse(getBEResponse, GetAnimalMarkingLocationListResponse.class);
+        AnimalMarkingLocationList ListWrap = response.getAnimalMarkingLocationList();
+        List<AnimalMarkingLocation> locations = ListWrap.getAnimalMarkingLocation();
+        for (AnimalMarkingLocation location: locations){
+            System.out.println(location.getName());
+        }
+    }
     public static void testRegisterRequest(String APIKey,
                                            String IssuerId,
                                            String login,
@@ -701,7 +714,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-
+        String addrDS = "https://api2.vetrf.ru:8002/platform/herriot/services/1.0/DictionaryService";
         String addrAplManagementService = "https://api2.vetrf.ru:8002/platform/services/2.1/ApplicationManagementService";
         String addrEnterpriseService = "https://api2.vetrf.ru:8002/platform/herriot/services/1.0/EnterpriseService";
         String APIKey,IssuerId,login,auth,loginRequest;
@@ -719,6 +732,7 @@ public class Main {
         //testTerminateRequest(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"terminateAnimalRegistrationRequest","receiveApplicationResult");
         //testGetHistoryRequest(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"getAnimalRegistrationHistoryRequest","receiveApplicationResult");
         //testRegisterAnimalMovement(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"registerAnimalMovementEventRequest","receiveApplicationResult");
-        testGetRegistrationChangesRequest(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"getAnimalRegistrationChangesListRequest","receiveApplicationResult");
+        //testGetRegistrationChangesRequest(APIKey,IssuerId,login,addrAplManagementService,auth,loginRequest,"getAnimalRegistrationChangesListRequest","receiveApplicationResult");
+        testGetMarkingLocationsList(addrDS,auth,"GetAnimalMarkingLocationList");
     }
 }
